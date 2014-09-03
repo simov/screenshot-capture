@@ -1,0 +1,10 @@
+* { margin: 0; padding: 0; outline: 0; }
+
+body { font-family: Arial, Helvetica, Sans-Serif; font-size: 16px; line-height: 24px; color: #000; width: 200px; background: #fff; padding: 10px; cursor: default; }
+fieldset { border: 0; }
+fieldset:after { content: ''; display: block; clear: both; }
+h4 { margin-bottom: 5px; }
+ul { list-style: none; }
+ul li label { cursor: pointer; }
+ul li input { float: left; position: relative; top: 6px; margin-right: 5px; }
+button { float: right; font-size: 16px; line-height: 20px; cursor: pointer; padding: 0 10px; margin-top: 5px; }

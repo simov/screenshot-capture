@@ -1,0 +1,66 @@
+{
+    "manifest_version": 2,
+    "name"            : "Screenshot",
+    "version"         : "1.0",
+    "description"     : "Screenshot Capture",
+
+    "page_action": {
+        "default_icon": {
+            "19" : "/images/icon19.png",
+            "38" : "/images/icon38.png"
+        },
+        "default_title": "Screenshot Capture",
+        "default_popup": "/templates/popup.html"
+    },
+
+    "background" : {
+        "scripts": [
+            "js/background.js"
+        ],
+        "persistent": false
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "css": [
+                "css/jquery.Jcrop.min.css",
+                "css/content.css"
+            ],
+            "js": [
+                "/jslib/jquery-1.9.1.min.js",
+                "/jslib/jquery.Jcrop.min.js",
+                "js/content.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true
+        }
+    ],
+
+    "web_accessible_resources": [
+        "/jslib/jquery.min.map",
+        "/images/pixel.png",
+        "/images/Jcrop.gif"
+    ],
+
+    "commands": {
+        "take-screenshot": {
+            "suggested_key": {
+                "default": "Alt+S"
+            },
+            "description": "Take screenshot"
+        }
+    },
+
+    "icons": {
+        "16"  : "images/icon16.png",
+        "48"  : "images/icon48.png",
+        "128" : "images/icon128.png"
+    },
+
+    "permissions": [
+        "tabs",
+        "storage",
+        "<all_urls>"
+    ]
+}
