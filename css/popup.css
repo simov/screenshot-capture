@@ -7,4 +7,4 @@ h4 { margin-bottom: 5px; }
 ul { list-style: none; }
 ul li label { cursor: pointer; }
 ul li input { float: left; position: relative; top: 6px; margin-right: 5px; }
-button { float: right; font-size: 16px; line-height: 20px; cursor: pointer; padding: 0 10px; margin-top: 5px; }
+button { float: right; font-size: 16px; line-height: 20px; cursor: pointer; padding: 0 10px; margin-top: 5px; display: none; }
