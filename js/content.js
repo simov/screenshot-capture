@@ -4,9 +4,14 @@ chrome.extension.onMessage.addListener(function (req, sender, res) {
     return true;
 });
 
+$(window).on('load', function (evt) {
+    e.loaded = true;
+});
+
 // action
 var a = {
     toggle: function (req, sender, res) {
+        if (!e.loaded) return;
         e.init(function () {
             e.active = !e.active;
             $('.jcrop-holder')[e.active?'show':'hide']();
@@ -46,6 +51,7 @@ var c = {
 
 // extension
 var e = {
+    loaded: false,
     ready: false,
     active: false,
     timeout: null,
