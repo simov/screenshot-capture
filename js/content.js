@@ -90,15 +90,19 @@ var e = {
 
             e.ready = true;
             done();
-        },10);
+        }, 10);
     },
     capture: function () {
-        c.send('capture', {crop:e.selection}, function (res) {
-            e.active = false;
-            $('.jcrop-holder').hide();
-            e.saveAs(res.image);
-            c.send('toggle', {state:e.active});
-        });
+        $('.jcrop-holder > div:eq(0)').hide();
+        setTimeout(function () {
+            c.send('capture', {crop:e.selection}, function (res) {
+                e.active = false;
+                $('.jcrop-holder > div:eq(0)').show();
+                $('.jcrop-holder').hide();
+                e.saveAs(res.image);
+                c.send('toggle', {state:e.active});
+            });
+        }, 100);
     },
     saveAs: function (image) {
         document.location.href = image.replace('image/png', 'image/octet-stream');
