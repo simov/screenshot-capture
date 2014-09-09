@@ -64,39 +64,41 @@ var e = {
         var pixel = c.url('/images/pixel.png');
         $('body').append('<img id="fake-image" src="'+pixel+'">');
 
-        // init jcrop
-        $('#fake-image').Jcrop({
-            bgColor:'none',
-            onSelect: function (evt) {
-                e.selection = evt;
-                c.storage(function (sync) {
-                    if (sync.action == 'crop') e.capture();
+        setTimeout(function () {
+            // init jcrop
+            $('#fake-image').Jcrop({
+                bgColor:'none',
+                onSelect: function (evt) {
+                    e.selection = evt;
+                    c.storage(function (sync) {
+                        if (sync.action == 'crop') e.capture();
+                    });
+                },
+                onChange: function (evt) {
+                    e.selection = evt;
+                },
+                onRelease: function (evt) {
+                    e.selection = null;
+                }
+            });
+
+            var timeout = setInterval(function () {
+                if ($('.jcrop-holder').length) clearInterval(timeout);
+
+                // fix styles
+                $('.jcrop-holder').css({
+                    position:'fixed', top:0, left:0, width:'100%', height:'100%', zIndex:10000
                 });
-            },
-            onChange: function (evt) {
-                e.selection = evt;
-            },
-            onRelease: function (evt) {
-                e.selection = null;
-            }
-        });
+                $('.jcrop-hline, .jcrop-vline').css({
+                    backgroundImage: 'url('+c.url('/images/Jcrop.gif')+')'
+                });
+                // hide jcrop holder by default
+                $('.jcrop-holder').hide();
 
-        var timeout = setInterval(function () {
-            if ($('.jcrop-holder').length) clearInterval(timeout);
-
-            // fix styles
-            $('.jcrop-holder').css({
-                position:'fixed', top:0, left:0, width:'100%', height:'100%', zIndex:10000
-            });
-            $('.jcrop-hline, .jcrop-vline').css({
-                backgroundImage: 'url('+c.url('/images/Jcrop.gif')+')'
-            });
-            // hide jcrop holder by default
-            $('.jcrop-holder').hide();
-
-            e.ready = true;
-            done();
-        }, 10);
+                e.ready = true;
+                done();
+            }, 100);
+        }, 100);
     },
     capture: function () {
         $('.jcrop-holder > div:eq(0)').hide();
