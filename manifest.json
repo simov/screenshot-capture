@@ -58,6 +58,8 @@
         "128" : "images/icon128.png"
     },
 
+    "homepage_url": "https://chrome.google.com/webstore/detail/screenshot-capture/giabbpobpebjfegnpcclkocepcgockkc",
+
     "permissions": [
         "tabs",
         "storage",
