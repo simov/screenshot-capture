@@ -11,7 +11,7 @@
 - Scroll to the bottom of the page
 - Click on the _Keyboard shortcuts_ button
 - Find the **Screenshot Capture** extension inside the popup window
-- Set a keyboard combination to trigger the extension <br />
+- Set a key combination to trigger the extension <br />
   For example: `Alt+S`
 
 
