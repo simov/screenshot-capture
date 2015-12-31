@@ -14,7 +14,7 @@
 - Set a key combination to trigger the extension <br />
   For example: `Alt+S`
 
-> The extension saves the images in PNG format.
+> The images are saved in PNG format.
 
 
 ## Features
