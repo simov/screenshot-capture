@@ -10,7 +10,7 @@
       "38" : "/images/icon38.png"
     },
     "default_title": "Screenshot Capture",
-    "default_popup": "/templates/popup.html"
+    "default_popup": "/views/options.html"
   },
 
   "background" : {
@@ -24,12 +24,12 @@
     {
       "matches": ["<all_urls>"],
       "css": [
-        "css/jquery.Jcrop.min.css",
+        "css/vendor/jquery.Jcrop.min.css",
         "css/content.css"
       ],
       "js": [
-        "/jslib/jquery-1.9.1.min.js",
-        "/jslib/jquery.Jcrop.min.js",
+        "/js/vendor/jquery-1.9.1.min.js",
+        "/js/vendor/jquery.Jcrop.min.js",
         "js/content.js"
       ],
       "run_at": "document_start",
@@ -38,7 +38,7 @@
   ],
 
   "web_accessible_resources": [
-    "/jslib/jquery.min.map",
+    "/js/vendor/jquery.min.map",
     "/images/pixel.png",
     "/images/Jcrop.gif"
   ],
