@@ -1,51 +1,54 @@
+
 // chrome.storage.sync.clear()
-chrome.storage.sync.get(function (sync) {
+
+chrome.storage.sync.get((sync) => {
   if (!sync.action)
-    chrome.storage.sync.set({action:'crop'})
+    chrome.storage.sync.set({action: 'crop'})
 })
 
-chrome.commands.onCommand.addListener(function (command) {
-  if (command != 'take-screenshot') return
-  chrome.tabs.getSelected(null, function (tab) {
-    chrome.tabs.sendMessage(tab.id, {message:'toggle'}, function (res) {
-      chrome.pageAction[res.state?'show':'hide'](tab.id)
+chrome.commands.onCommand.addListener((command) => {
+  if (command !== 'take-screenshot') return
+  chrome.tabs.getSelected(null, (tab) => {
+    chrome.tabs.sendMessage(tab.id, {message: 'toggle'}, (res) => {
+      chrome.pageAction[res.state ? 'show' : 'hide'](tab.id)
     })
   })
 })
 
-chrome.extension.onMessage.addListener(function (req, sender, res) {
+chrome.extension.onMessage.addListener((req, sender, res) => {
   a[req.message](req, res)
   return true
 })
 
 // action
 var a = {
-  toggle: function (req, res) {
-    chrome.tabs.getSelected(null, function (tab) {
-      chrome.pageAction[res.state?'show':'hide'](tab.id)
+  toggle: (req, res) => {
+    chrome.tabs.getSelected(null, (tab) => {
+      chrome.pageAction[res.state ? 'show' : 'hide'](tab.id)
     })
   },
-  capture: function (req, res) {
-    chrome.tabs.getSelected(null, function (tab) {
+  capture: (req, res) => {
+    chrome.tabs.getSelected(null, (tab) => {
 
-      chrome.tabs.captureVisibleTab(tab.windowId, {format:'png'}, function (image) {
+      chrome.tabs.captureVisibleTab(tab.windowId, {format: 'png'}, (image) => {
         // image is base64
 
-        chrome.storage.sync.get(function (sync) {
-          (function (done) {
-            (sync.action == 'full')
-              ? done(image)
-              : e.crop(req, image, done)
-          }(function (image) {
-            res({message:'image', image:image})
-          }))
+        chrome.storage.sync.get((sync) => {
+          if (sync.action === 'full') {
+            res({message: 'image', image: image})
+          }
+          else {
+            e.crop(req, image, (cropped) => {
+              res({message: 'image', image: cropped})
+            })
+          }
         })
       })
     })
   },
-  save: function (req, res) {
-    chrome.tabs.getSelected(null, function (tab) {
-      chrome.tabs.sendMessage(tab.id, {message:'save'}, function (res) {
+  save: (req, res) => {
+    chrome.tabs.getSelected(null, (tab) => {
+      chrome.tabs.sendMessage(tab.id, {message: 'save'}, (res) => {
 
       })
     })
@@ -54,7 +57,7 @@ var a = {
 
 // extension
 var e = {
-  crop: function (req, image, done) {
+  crop: (req, image, done) => {
     var canvas = null
     if (!canvas) {
       canvas = document.createElement('canvas')
@@ -65,7 +68,7 @@ var e = {
       width = req.crop.w, height = req.crop.h
 
     var img = new Image()
-    img.onload = function() {
+    img.onload = () => {
       canvas.width = width
       canvas.height = height
       var context = canvas.getContext('2d')

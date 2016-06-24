@@ -1,50 +1,50 @@
 
-chrome.extension.onMessage.addListener(function (req, sender, res) {
+chrome.extension.onMessage.addListener((req, sender, res) => {
   a[req.message](req, sender, res)
   return true
 })
 
-$(window).on('load', function (evt) {
+$(window).on('load', (evt) => {
   e.loaded = true
 })
 
 // action
 var a = {
-  toggle: function (req, sender, res) {
+  toggle: (req, sender, res) => {
     if (!e.loaded) return
-    e.init(function () {
+    e.init(() => {
       e.active = !e.active
-      $('.jcrop-holder')[e.active?'show':'hide']()
+      $('.jcrop-holder')[e.active ? 'show' : 'hide']()
       clearTimeout(e.timeout)
-      res({message:'toggle', state:e.active})
+      res({message: 'toggle', state: e.active})
 
       if (!e.active) return
-      c.storage(function (sync) {
-        if (sync.action != 'full') return
-        c.send('capture', {}, function (res) {
+      c.storage((sync) => {
+        if (sync.action !== 'full') return
+        c.send('capture', {}, (res) => {
           e.saveAs(res.image)
-          e.timeout = setTimeout(function () {
-            c.send('toggle', {state:e.active})
+          e.timeout = setTimeout(() => {
+            c.send('toggle', {state: e.active})
           }, 5000)
         })
       })
     })
   },
-  save: function (req, sender, res) {
+  save: (req, sender, res) => {
     if (e.selection) e.capture()
   }
 }
 
 // chrome
 var c = {
-  send: function (message, data, done) {
+  send: (message, data, done) => {
     data.message = message
     chrome.extension.sendMessage(data, done)
   },
-  url: function (path) {
+  url: (path) => {
     return chrome.extension.getURL(path)
   },
-  storage: function (done) {
+  storage: (done) => {
     chrome.storage.sync.get(done)
   }
 }
@@ -57,40 +57,40 @@ var e = {
   timeout: null,
   selection: null,
 
-  init: function (done) {
+  init: (done) => {
     if (e.ready) return done()
 
     // add fake image
     var pixel = c.url('/images/pixel.png')
-    $('body').append('<img id="fake-image" src="'+pixel+'">')
+    $('body').append('<img id="fake-image" src="' + pixel + '">')
 
-    setTimeout(function () {
+    setTimeout(() => {
       // init jcrop
       $('#fake-image').Jcrop({
-        bgColor:'none',
-        onSelect: function (evt) {
+        bgColor: 'none',
+        onSelect: (evt) => {
           e.selection = evt
-          c.storage(function (sync) {
-            if (sync.action == 'crop') e.capture()
+          c.storage((sync) => {
+            if (sync.action === 'crop') e.capture()
           })
         },
-        onChange: function (evt) {
+        onChange: (evt) => {
           e.selection = evt
         },
-        onRelease: function (evt) {
+        onRelease: (evt) => {
           e.selection = null
         }
       })
 
-      var timeout = setInterval(function () {
+      var timeout = setInterval(() => {
         if ($('.jcrop-holder').length) clearInterval(timeout)
 
         // fix styles
         $('.jcrop-holder').css({
-          position:'fixed', top:0, left:0, width:'100%', height:'100%', zIndex:10000
+          position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 10000
         })
         $('.jcrop-hline, .jcrop-vline').css({
-          backgroundImage: 'url('+c.url('/images/Jcrop.gif')+')'
+          backgroundImage: 'url(' + c.url('/images/Jcrop.gif') + ')'
         })
         // hide jcrop holder by default
         $('.jcrop-holder').hide()
@@ -100,19 +100,19 @@ var e = {
       }, 100)
     }, 100)
   },
-  capture: function () {
+  capture: () => {
     $('.jcrop-holder > div:eq(0)').hide()
-    setTimeout(function () {
-      c.send('capture', {crop:e.selection}, function (res) {
+    setTimeout(() => {
+      c.send('capture', {crop:e.selection}, (res) => {
         e.active = false
         $('.jcrop-holder > div:eq(0)').show()
         $('.jcrop-holder').hide()
         e.saveAs(res.image)
-        c.send('toggle', {state:e.active})
+        c.send('toggle', {state: e.active})
       })
     }, 100)
   },
-  saveAs: function (image) {
+  saveAs: (image) => {
     document.location.href = image.replace('image/png', 'image/octet-stream')
   }
 }
