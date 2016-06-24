@@ -2,8 +2,9 @@
 // chrome.storage.sync.clear()
 
 chrome.storage.sync.get((sync) => {
-  if (!sync.action)
+  if (!sync.action) {
     chrome.storage.sync.set({action: 'crop'})
+  }
 })
 
 chrome.commands.onCommand.addListener((command) => {

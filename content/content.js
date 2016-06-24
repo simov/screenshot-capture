@@ -87,7 +87,8 @@ var e = {
 
         // fix styles
         $('.jcrop-holder').css({
-          position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 10000
+          position: 'fixed', top: 0, left: 0,
+          width: '100%', height: '100%', zIndex: 10000
         })
         $('.jcrop-hline, .jcrop-vline').css({
           backgroundImage: 'url(' + c.url('/images/Jcrop.gif') + ')'
