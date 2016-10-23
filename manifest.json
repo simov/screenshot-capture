@@ -4,13 +4,13 @@
   "version"         : "1.2",
   "description"     : "Screenshot Capture",
 
-  "page_action": {
+  "browser_action": {
     "default_icon": {
       "19" : "/images/icon19.png",
       "38" : "/images/icon38.png"
     },
     "default_title": "Screenshot Capture",
-    "default_popup": "/content/options.html"
+    "default_popup": "/content/popup.html"
   },
 
   "background" : {
@@ -47,7 +47,7 @@
       "suggested_key": {
         "default": "Alt+S"
       },
-      "description": "Take screenshot"
+      "description": "Take Screenshot"
     }
   },
 
