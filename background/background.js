@@ -10,24 +10,16 @@ chrome.storage.sync.get((sync) => {
 chrome.commands.onCommand.addListener((command) => {
   if (command !== 'take-screenshot') return
   chrome.tabs.getSelected(null, (tab) => {
-    chrome.tabs.sendMessage(tab.id, {message: 'toggle'}, (res) => {
-      chrome.pageAction[res.state ? 'show' : 'hide'](tab.id)
-    })
+    chrome.tabs.sendMessage(tab.id, {message: 'toggle'}, (res) => {})
   })
 })
 
 chrome.extension.onMessage.addListener((req, sender, res) => {
-  a[req.message](req, res)
+  action[req.message](req, res)
   return true
 })
 
-// action
-var a = {
-  toggle: (req, res) => {
-    chrome.tabs.getSelected(null, (tab) => {
-      chrome.pageAction[res.state ? 'show' : 'hide'](tab.id)
-    })
-  },
+var action = {
   capture: (req, res) => {
     chrome.tabs.getSelected(null, (tab) => {
 
@@ -39,7 +31,7 @@ var a = {
             res({message: 'image', image: image})
           }
           else {
-            e.crop(req, image, (cropped) => {
+            crop(req, image, (cropped) => {
               res({message: 'image', image: cropped})
             })
           }
@@ -49,40 +41,35 @@ var a = {
   },
   save: (req, res) => {
     chrome.tabs.getSelected(null, (tab) => {
-      chrome.tabs.sendMessage(tab.id, {message: 'save'}, (res) => {
-
-      })
+      chrome.tabs.sendMessage(tab.id, {message: 'save'}, (res) => {})
     })
   }
 }
 
-// extension
-var e = {
-  crop: (req, image, done) => {
-    var canvas = null
-    if (!canvas) {
-      canvas = document.createElement('canvas')
-      document.body.appendChild(canvas)
-    }
-
-    var top = req.crop.y, left = req.crop.x,
-      width = req.crop.w, height = req.crop.h
-
-    var img = new Image()
-    img.onload = () => {
-      canvas.width = width
-      canvas.height = height
-      var context = canvas.getContext('2d')
-      context.drawImage(img,
-        left, top,
-        width, height,
-        0, 0,
-        width, height
-      )
-
-      var cropped = canvas.toDataURL('image/png')
-      done(cropped)
-    }
-    img.src = image
+function crop (req, image, done) {
+  var canvas = null
+  if (!canvas) {
+    canvas = document.createElement('canvas')
+    document.body.appendChild(canvas)
   }
+
+  var top = req.crop.y, left = req.crop.x,
+    width = req.crop.w, height = req.crop.h
+
+  var img = new Image()
+  img.onload = () => {
+    canvas.width = width
+    canvas.height = height
+    var context = canvas.getContext('2d')
+    context.drawImage(img,
+      left, top,
+      width, height,
+      0, 0,
+      width, height
+    )
+
+    var cropped = canvas.toDataURL('image/png')
+    done(cropped)
+  }
+  img.src = image
 }

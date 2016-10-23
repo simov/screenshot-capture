@@ -1,20 +1,8 @@
 
-// chrome
-var c = {
-  send: (message, data, done) => {
-    data = data || {}
-    data.message = message
-    chrome.extension.sendMessage(data, done)
-  },
-  storage: (done) => {
-    chrome.storage.sync.get(done)
-  }
-}
-
 $(function () {
   var map = ['full', 'crop', 'wait']
 
-  c.storage((sync) => {
+  chrome.storage.sync.get((sync) => {
     $('#popup input')
       .eq(map.indexOf(sync.action))
       .attr('checked', true)
@@ -29,6 +17,6 @@ $(function () {
   })
 
   $('button').on('click', (e) => {
-    c.send('save')
+    chrome.extension.sendMessage({message: 'save'})
   })
 })

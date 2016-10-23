@@ -22,7 +22,9 @@
 
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": [
+        "<all_urls>"
+      ],
       "css": [
         "vendor/jquery.Jcrop.min.css",
         "css/content.css"
@@ -32,8 +34,7 @@
         "/vendor/jquery.Jcrop.min.js",
         "content/content.js"
       ],
-      "run_at": "document_start",
-      "all_frames": true
+      "run_at": "document_start"
     }
   ],
 
@@ -60,7 +61,6 @@
   "homepage_url": "https://chrome.google.com/webstore/detail/screenshot-capture/giabbpobpebjfegnpcclkocepcgockkc",
 
   "permissions": [
-    "tabs",
     "storage",
     "<all_urls>"
   ]
