@@ -9,9 +9,10 @@
       "19" : "/images/icon19.png",
       "38" : "/images/icon38.png"
     },
-    "default_title": "Screenshot Capture",
-    "default_popup": "/content/popup.html"
+    "default_title": "Screenshot Capture"
   },
+
+  "options_page": "/content/options.html",
 
   "background" : {
     "scripts": [
@@ -19,24 +20,6 @@
     ],
     "persistent": false
   },
-
-  "content_scripts": [
-    {
-      "matches": [
-        "<all_urls>"
-      ],
-      "css": [
-        "vendor/jquery.Jcrop.min.css",
-        "css/content.css"
-      ],
-      "js": [
-        "/vendor/jquery-1.9.1.min.js",
-        "/vendor/jquery.Jcrop.min.js",
-        "content/content.js"
-      ],
-      "run_at": "document_start"
-    }
-  ],
 
   "web_accessible_resources": [
     "/images/pixel.png",
@@ -62,6 +45,6 @@
 
   "permissions": [
     "storage",
-    "<all_urls>"
+    "activeTab"
   ]
 }

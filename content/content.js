@@ -3,60 +3,57 @@ var state = {
   loaded: false,
   ready: false,
   active: false,
-  timeout: null,
   selection: null
 }
 
-chrome.extension.onMessage.addListener((req, sender, res) => {
-  action[req.message](req, sender, res)
+if (document.readyState === 'complete') {
+  state.loaded = true
+}
+else {
+  window.addEventListener('DOMContentLoaded', mount)
+  window.addEventListener('load', () => {
+    state.loaded = true
+  })
+}
+
+chrome.runtime.onMessage.addListener((req, sender, res) => {
+  if (req.message === 'inject') {
+    if (!state.selection) {
+      res({message: 'loaded'})
+      toggle()
+    }
+    else {
+      capture(true)
+    }
+  }
   return true
 })
 
-$(window).on('load', () => {
-  state.loaded = true
-})
-
-var action = {
-  toggle: (req, sender, res) => {
-    if (!state.loaded) return
-    init(() => {
-      state.active = !state.active
-      $('.jcrop-holder')[state.active ? 'show' : 'hide']()
-      clearTimeout(state.timeout)
-
-      if (!state.active) return
-      c.storage((sync) => {
-        if (sync.action !== 'full') return
-        c.send('capture', {}, (res) => {
-          save(res.image)
-        })
-      })
-    })
-  },
-  save: (req, sender, res) => {
-    if (state.selection) capture()
+function toggle () {
+  if (!state.loaded) {
+    return
   }
-}
 
-// chrome
-var c = {
-  send: (message, data, done) => {
-    data.message = message
-    chrome.extension.sendMessage(data, done)
-  },
-  url: (path) => {
-    return chrome.extension.getURL(path)
-  },
-  storage: (done) => {
-    chrome.storage.sync.get(done)
-  }
+  init(() => {
+    state.active = !state.active
+    $('.jcrop-holder')[state.active ? 'show' : 'hide']()
+
+    if (!state.active) {
+      return
+    }
+
+    capture()
+  })
 }
 
 function init (done) {
-  if (state.ready) return done()
+  if (state.ready) {
+    done()
+    return
+  }
 
   // add fake image
-  var pixel = c.url('/images/pixel.png')
+  var pixel = chrome.runtime.getURL('/images/pixel.png')
   $('body').append('<img id="fake-image" src="' + pixel + '">')
 
   setTimeout(() => {
@@ -65,9 +62,7 @@ function init (done) {
       bgColor: 'none',
       onSelect: (e) => {
         state.selection = e
-        c.storage((sync) => {
-          if (sync.action === 'crop') capture()
-        })
+        capture()
       },
       onChange: (e) => {
         state.selection = e
@@ -78,7 +73,9 @@ function init (done) {
     })
 
     var timeout = setInterval(() => {
-      if ($('.jcrop-holder').length) clearInterval(timeout)
+      if ($('.jcrop-holder').length) {
+        clearInterval(timeout)
+      }
 
       // fix styles
       $('.jcrop-holder').css({
@@ -86,7 +83,7 @@ function init (done) {
         width: '100%', height: '100%', zIndex: 10000
       })
       $('.jcrop-hline, .jcrop-vline').css({
-        backgroundImage: 'url(' + c.url('/images/Jcrop.gif') + ')'
+        backgroundImage: 'url(' + chrome.runtime.getURL('/images/Jcrop.gif') + ')'
       })
       // hide jcrop holder by default
       $('.jcrop-holder').hide()
@@ -97,16 +94,28 @@ function init (done) {
   }, 100)
 }
 
-function capture () {
-  $('.jcrop-holder > div:eq(0)').hide()
-  setTimeout(() => {
-    c.send('capture', {crop: state.selection}, (res) => {
-      state.active = false
-      $('.jcrop-holder > div:eq(0)').show()
-      $('.jcrop-holder').hide()
-      save(res.image)
-    })
-  }, 100)
+function capture (force) {
+  chrome.storage.sync.get((res) => {
+    if (res.action === 'crop' || (res.action === 'wait' && force)) {
+      $('.jcrop-holder > div:eq(0)').hide()
+      setTimeout(() => {
+        chrome.runtime.sendMessage({message: 'capture', crop: state.selection}, (res) => {
+          state.active = false
+          $('.jcrop-holder > div:eq(0)').show()
+          $('.jcrop-holder').hide()
+          save(res.image)
+        })
+      }, 100)
+    }
+    else if (res.action === 'full') {
+      chrome.runtime.sendMessage({message: 'capture'}, (res) => {
+        state.active = false
+        $('.jcrop-holder > div:eq(0)').show()
+        $('.jcrop-holder').hide()
+        save(res.image)
+      })
+    }
+  })
 }
 
 function save (image) {
