@@ -1,6 +1,6 @@
 
+var jcrop
 var state = {
-  ready: false,
   active: false,
   selection: null
 }
@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
     // prevent re-injecting
     res({})
 
-    if (!state.ready) {
+    if (!jcrop) {
       init(() => {
         state.active = !state.active
         $('.jcrop-holder')[state.active ? 'show' : 'hide']()
@@ -44,14 +44,10 @@ function init (done) {
         state.selection = e
       },
       onRelease: (e) => {
-        state.selection = null
+        // state.selection = null
       }
-    })
-
-    var timeout = setInterval(() => {
-      if ($('.jcrop-holder').length) {
-        clearInterval(timeout)
-      }
+    }, function ready () {
+      jcrop = this
 
       // fix styles
       $('.jcrop-holder').css({
@@ -64,21 +60,19 @@ function init (done) {
       // hide jcrop holder by default
       $('.jcrop-holder').hide()
 
-      state.ready = true
       done()
-    }, 100)
+    })
   }, 100)
 }
 
 function capture () {
   chrome.storage.sync.get((res) => {
     if (/crop|wait/.test(res.action) && state.selection) {
-      $('.jcrop-holder > div:eq(0)').hide()
+      jcrop.release()
       setTimeout(() => {
         chrome.runtime.sendMessage({message: 'capture', crop: state.selection}, (res) => {
           state.active = false
           state.selection = null
-          $('.jcrop-holder > div:eq(0)').show()
           $('.jcrop-holder').hide()
           save(res.image)
         })
@@ -87,7 +81,6 @@ function capture () {
     else if (res.action === 'full') {
       chrome.runtime.sendMessage({message: 'capture'}, (res) => {
         state.active = false
-        $('.jcrop-holder > div:eq(0)').show()
         $('.jcrop-holder').hide()
         save(res.image)
       })
