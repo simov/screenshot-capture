@@ -7,8 +7,7 @@ var state = {
 
 chrome.runtime.onMessage.addListener((req, sender, res) => {
   if (req.message === 'init') {
-    // prevent re-injecting
-    res({})
+    res({}) // prevent re-injecting
 
     if (!jcrop) {
       init(() => {
@@ -18,10 +17,9 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
       })
     }
     else {
-      // toggle
       state.active = !state.active
       $('.jcrop-holder')[state.active ? 'show' : 'hide']()
-      capture()
+      capture(true)
     }
   }
   return true
@@ -44,7 +42,9 @@ function init (done) {
         state.selection = e
       },
       onRelease: (e) => {
-        // state.selection = null
+        setTimeout(() => {
+          state.selection = null
+        }, 100)
       }
     }, function ready () {
       jcrop = this
@@ -65,9 +65,9 @@ function init (done) {
   }, 100)
 }
 
-function capture () {
+function capture (force) {
   chrome.storage.sync.get((res) => {
-    if (/crop|wait/.test(res.action) && state.selection) {
+    if (state.selection && (res.action === 'crop' || (res.action === 'wait' && force))) {
       jcrop.release()
       setTimeout(() => {
         chrome.runtime.sendMessage({message: 'capture', crop: state.selection}, (res) => {
@@ -76,7 +76,7 @@ function capture () {
           $('.jcrop-holder').hide()
           save(res.image)
         })
-      }, 100)
+      }, 50)
     }
     else if (res.action === 'full') {
       chrome.runtime.sendMessage({message: 'capture'}, (res) => {
