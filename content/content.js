@@ -1,57 +1,33 @@
 
 var state = {
-  loaded: false,
   ready: false,
   active: false,
   selection: null
 }
 
-if (document.readyState === 'complete') {
-  state.loaded = true
-}
-else {
-  window.addEventListener('DOMContentLoaded', mount)
-  window.addEventListener('load', () => {
-    state.loaded = true
-  })
-}
-
 chrome.runtime.onMessage.addListener((req, sender, res) => {
-  if (req.message === 'inject') {
-    if (!state.selection) {
-      res({message: 'loaded'})
-      toggle()
+  if (req.message === 'init') {
+    // prevent re-injecting
+    res({})
+
+    if (!state.ready) {
+      init(() => {
+        state.active = !state.active
+        $('.jcrop-holder')[state.active ? 'show' : 'hide']()
+        capture()
+      })
     }
     else {
-      capture(true)
+      // toggle
+      state.active = !state.active
+      $('.jcrop-holder')[state.active ? 'show' : 'hide']()
+      capture()
     }
   }
   return true
 })
 
-function toggle () {
-  if (!state.loaded) {
-    return
-  }
-
-  init(() => {
-    state.active = !state.active
-    $('.jcrop-holder')[state.active ? 'show' : 'hide']()
-
-    if (!state.active) {
-      return
-    }
-
-    capture()
-  })
-}
-
 function init (done) {
-  if (state.ready) {
-    done()
-    return
-  }
-
   // add fake image
   var pixel = chrome.runtime.getURL('/images/pixel.png')
   $('body').append('<img id="fake-image" src="' + pixel + '">')
@@ -94,13 +70,14 @@ function init (done) {
   }, 100)
 }
 
-function capture (force) {
+function capture () {
   chrome.storage.sync.get((res) => {
-    if (res.action === 'crop' || (res.action === 'wait' && force)) {
+    if (/crop|wait/.test(res.action) && state.selection) {
       $('.jcrop-holder > div:eq(0)').hide()
       setTimeout(() => {
         chrome.runtime.sendMessage({message: 'capture', crop: state.selection}, (res) => {
           state.active = false
+          state.selection = null
           $('.jcrop-holder > div:eq(0)').show()
           $('.jcrop-holder').hide()
           save(res.image)

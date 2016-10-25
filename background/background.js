@@ -8,7 +8,7 @@ chrome.storage.sync.get((res) => {
 })
 
 function inject (tab) {
-  chrome.tabs.sendMessage(tab.id, {message: 'inject'}, (res) => {
+  chrome.tabs.sendMessage(tab.id, {message: 'init'}, (res) => {
     if (res) {
       clearTimeout(timeout)
     }
@@ -23,7 +23,7 @@ function inject (tab) {
     chrome.tabs.executeScript(tab.id, {file: 'content/content.js', runAt: 'document_start'})
 
     setTimeout(() => {
-      chrome.tabs.sendMessage(tab.id, {message: 'toggle'})
+      chrome.tabs.sendMessage(tab.id, {message: 'init'})
     }, 100)
   }, 100)
 }
