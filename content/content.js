@@ -27,42 +27,39 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
 
 function init (done) {
   // add fake image
-  var pixel = chrome.runtime.getURL('/images/pixel.png')
-  $('body').append('<img id="fake-image" src="' + pixel + '">')
+  $('body').append('<div id="fake-image">')
 
-  setTimeout(() => {
-    // init jcrop
-    $('#fake-image').Jcrop({
-      bgColor: 'none',
-      onSelect: (e) => {
-        state.selection = e
-        capture()
-      },
-      onChange: (e) => {
-        state.selection = e
-      },
-      onRelease: (e) => {
-        setTimeout(() => {
-          state.selection = null
-        }, 100)
-      }
-    }, function ready () {
-      jcrop = this
+  // init jcrop
+  $('#fake-image').Jcrop({
+    bgColor: 'none',
+    onSelect: (e) => {
+      state.selection = e
+      capture()
+    },
+    onChange: (e) => {
+      state.selection = e
+    },
+    onRelease: (e) => {
+      setTimeout(() => {
+        state.selection = null
+      }, 100)
+    }
+  }, function ready () {
+    jcrop = this
 
-      // fix styles
-      $('.jcrop-holder').css({
-        position: 'fixed', top: 0, left: 0,
-        width: '100%', height: '100%', zIndex: 10000
-      })
-      $('.jcrop-hline, .jcrop-vline').css({
-        backgroundImage: 'url(' + chrome.runtime.getURL('/images/Jcrop.gif') + ')'
-      })
-      // hide jcrop holder by default
-      $('.jcrop-holder').hide()
-
-      done()
+    // fix styles
+    $('.jcrop-holder').css({
+      position: 'fixed', top: 0, left: 0,
+      width: '100%', height: '100%', zIndex: 10000
     })
-  }, 100)
+    $('.jcrop-hline, .jcrop-vline').css({
+      backgroundImage: 'url(' + chrome.runtime.getURL('/images/Jcrop.gif') + ')'
+    })
+    // hide jcrop holder by default
+    $('.jcrop-holder').hide()
+
+    done()
+  })
 }
 
 function capture (force) {
