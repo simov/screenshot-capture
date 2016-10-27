@@ -13,12 +13,14 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
       init(() => {
         state.active = !state.active
         $('.jcrop-holder')[state.active ? 'show' : 'hide']()
+        chrome.runtime.sendMessage({message: 'active', active: state.active})
         capture()
       })
     }
     else {
       state.active = !state.active
       $('.jcrop-holder')[state.active ? 'show' : 'hide']()
+      chrome.runtime.sendMessage({message: 'active', active: state.active})
       capture(true)
     }
   }
@@ -71,14 +73,16 @@ function capture (force) {
           state.active = false
           state.selection = null
           $('.jcrop-holder').hide()
+          chrome.runtime.sendMessage({message: 'active', active: state.active})
           save(res.image)
         })
       }, 50)
     }
-    else if (res.action === 'full') {
+    else if (res.action === 'view') {
       chrome.runtime.sendMessage({message: 'capture'}, (res) => {
         state.active = false
         $('.jcrop-holder').hide()
+        chrome.runtime.sendMessage({message: 'active', active: state.active})
         save(res.image)
       })
     }

@@ -48,7 +48,7 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
         // image is base64
 
         chrome.storage.sync.get((_res) => {
-          if (_res.action === 'full') {
+          if (_res.action === 'view') {
             res({message: 'image', image: image})
           }
           else {
@@ -59,6 +59,32 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
         })
       })
     })
+  }
+  else if (req.message === 'active') {
+    if (req.active) {
+      chrome.storage.sync.get((res) => {
+        if (res.action === 'view') {
+          chrome.browserAction.setTitle({tabId: sender.tab.id, title: 'Capture Viewport'})
+          chrome.browserAction.setBadgeText({tabId: sender.tab.id, text: '⬒'})
+        }
+        // else if (res.action === 'full') {
+        //   chrome.browserAction.setTitle({tabId: sender.tab.id, title: 'Capture Document'})
+        //   chrome.browserAction.setBadgeText({tabId: sender.tab.id, text: '⬛'})
+        // }
+        else if (res.action === 'crop') {
+          chrome.browserAction.setTitle({tabId: sender.tab.id, title: 'Crop and Save'})
+          chrome.browserAction.setBadgeText({tabId: sender.tab.id, text: '⬔'})
+        }
+        else if (res.action === 'wait') {
+          chrome.browserAction.setTitle({tabId: sender.tab.id, title: 'Crop and Wait'})
+          chrome.browserAction.setBadgeText({tabId: sender.tab.id, text: '⬕'})
+        }
+      })
+    }
+    else {
+      chrome.browserAction.setTitle({tabId: sender.tab.id, title: 'Screenshot Capture'})
+      chrome.browserAction.setBadgeText({tabId: sender.tab.id, text: ''})
+    }
   }
   return true
 })
