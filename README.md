@@ -5,25 +5,30 @@
 ## [Install][1]
 
 
-## After Install
-
-- Navigate to `chrome://extensions`
-- Scroll down to the bottom of the page
-- Click on the `Keyboard shortcuts` button
-- Find the `Screenshot Capture` extension inside the popup window
-- Set a key combination to trigger the extension <br />
-  For example: `Alt+S`
-
-> The images are saved in PNG format.
-
-
 ## Features
 
-- **full screen** + automatic save
-- **crop area** + automatic save
-- **crop area** + manual save
+- Capture Viewport
+- Crop and Save (automatic save)
+- Crop and Wait (manual save)
 
-> These settings are accessible through an icon in the right side of your browser's address bar, after you trigger the extension through the specified key combination.
+> The screenshots are saved in PNG format.
+
+
+## Set Capture Method
+
+1. Click on the extension button using your **Right** Mouse Button.
+2. Select `Options` from the context menu.
+
+Alternatively:
+
+1. Navigate to `chrome://extensions` and find the Screenshot Capture extension.
+2. Click on the `Options` link under the Screenshot Capture extension.
+
+
+## Set Keyboard Shortcut
+
+1. Navigate to `chrome://extensions` and scroll down to the bottom of the page.
+2. Click on `Keyboard shortcuts` and set a key combination for Screenshot Capture.
 
 
 ## License
