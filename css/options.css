@@ -44,6 +44,12 @@ footer, #footer-push {
 
 /*capture-method*/
 h4 { margin-bottom: 0; }
+h4:after { content: ''; display: block; clear: both; }
+h4 span {
+  font-size: 14px; line-height: 32px; font-weight: normal;
+  display: inline-block; float: right;
+}
+code { background: #ececec; padding: 5px; border-radius: 5px; }
 
 .mdl-radio {
   transition-duration: .28s;
@@ -75,4 +81,3 @@ h4 { margin-bottom: 0; }
   border-radius: 3px;
 }
 .bs-callout p:last-child { margin: 0; }
-.bs-callout code { background: #ececec; padding: 5px; border-radius: 5px; }

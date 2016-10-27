@@ -45,7 +45,9 @@ m.mount(document.querySelector('main'), {
   view: () =>
     m('.mdl-grid', [
       m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
-        m('h4', 'Capture Method')
+        m('h4', 'Capture Method',
+          m('span', 'The screenshots are saved in ', m('code', 'PNG'), ' format')
+        )
       ),
       state.types.map((item) =>
         m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
@@ -61,17 +63,14 @@ m.mount(document.querySelector('main'), {
       ),
 
       m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
-        m('h4', 'Keyboard Shortcut')
+        m('h4', 'Keyboard Shortcut', [
+          (state.shortcut || null) &&
+          m('span', 'You can use ', m('code', state.shortcut), ' to capture screenshot'),
+          (!state.shortcut || null) &&
+          m('span', 'Currently there is no keyboard shortcut set')
+        ])
       ),
       m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop', [
-        (state.shortcut || null) &&
-        m('.bs-callout',
-          m('p', 'You can use ', m('code', state.shortcut), ' to capture screenshot.')
-        ),
-        (!state.shortcut || null) &&
-        m('.bs-callout',
-          m('p', 'You can also use a keyboard shortcut to capture screenshot.')
-        ),
         m('.bs-callout', [
           m('p', 'To set the keyboard shortcut:'),
           m('p', '1. Navigate to ', m('code', 'chrome://extensions'),
