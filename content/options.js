@@ -47,18 +47,16 @@ m.mount(document.querySelector('main'), {
       m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
         m('h4', 'Capture Method')
       ),
-      m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
-        state.types.map((item) =>
-          m('.mdl-cell',
-            m('label.mdl-radio mdl-js-radio mdl-js-ripple-effect', {
-              oncreate, onupdate: onupdate(item)}, [
-              m('input[type=radio][name=action].mdl-radio__button', {
-                checked: item.active ? 'checked' : null,
-                onchange: events.change(item)
-              }),
-              m('span.mdl-radio__label', m('em', item.icon), item.title)
-            ])
-          )
+      state.types.map((item) =>
+        m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
+          m('label.mdl-radio mdl-js-radio mdl-js-ripple-effect', {
+            oncreate, onupdate: onupdate(item)}, [
+            m('input[type=radio][name=action].mdl-radio__button', {
+              checked: item.active ? 'checked' : null,
+              onchange: events.change(item)
+            }),
+            m('span.mdl-radio__label', m('em', item.icon), item.title)
+          ])
         )
       ),
 
