@@ -73,11 +73,11 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
         // }
         else if (res.action === 'crop') {
           chrome.browserAction.setTitle({tabId: sender.tab.id, title: 'Crop and Save'})
-          chrome.browserAction.setBadgeText({tabId: sender.tab.id, text: '⬔'})
+          chrome.browserAction.setBadgeText({tabId: sender.tab.id, text: '◩'})
         }
         else if (res.action === 'wait') {
           chrome.browserAction.setTitle({tabId: sender.tab.id, title: 'Crop and Wait'})
-          chrome.browserAction.setBadgeText({tabId: sender.tab.id, text: '⬕'})
+          chrome.browserAction.setBadgeText({tabId: sender.tab.id, text: '◪'})
         }
       })
     }
