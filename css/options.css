@@ -40,3 +40,39 @@ footer, #footer-push {
 
 
 /*screenshot-capture*/
+
+
+/*capture-method*/
+h4:nth-of-type(1) { margin-bottom: 0; }
+
+.mdl-radio {
+  transition-duration: .28s;
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+  transition-property: background-color;
+  width: 100%; cursor: pointer;
+  padding: 10px 10px 10px 34px;
+  border-radius: 3px;
+}
+.mdl-radio:hover { background: #eee; }
+.mdl-radio.is-checked { background: #eee; }
+
+.mdl-radio__outer-circle { top: 14px; left: 10px; }
+.mdl-radio__inner-circle { top: 18px; left: 14px; }
+.mdl-radio__ripple-container { top: 1px; left: -3px; }
+
+.mdl-radio__label { padding: 0 0 0 20px; }
+.mdl-radio__label em {
+  position: relative; top: -1px;
+  font-style: normal; padding: 0 10px 0 0;
+}
+
+/*keyboard-shortcut*/
+.bs-callout {
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-radius: 3px;
+}
+.bs-callout p:last-child { margin: 0; }
+.bs-callout code { background: #ececec; padding: 5px; border-radius: 5px; }

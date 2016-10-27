@@ -2,9 +2,10 @@
 var state = {
   shortcut: {},
   types: [
-    {id: 'full', title: 'Entire Screen'},
-    {id: 'crop', title: 'Crop and Save'},
-    {id: 'wait', title: 'Crop and Wait'}
+    {id: 'view', icon: '⬒', title: 'Capture Viewport'},
+    // {id: 'full', icon: '⬛', title: 'Capture Document'},
+    {id: 'crop', icon: '⬔', title: 'Crop and Save'},
+    {id: 'wait', icon: '⬕', title: 'Crop and Wait'}
   ]
 }
 
@@ -43,35 +44,43 @@ var onupdate = (type) => (vnode) => {
 m.mount(document.querySelector('main'), {
   view: () =>
     m('.mdl-grid', [
-      m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop', [
-        m('h4', 'Capturing Method'),
-      ]),
-      m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop', [
-        state.types.map((type) =>
+      m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
+        m('h4', 'Capture Method')
+      ),
+      m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
+        state.types.map((item) =>
           m('.mdl-cell',
             m('label.mdl-radio mdl-js-radio mdl-js-ripple-effect', {
-              oncreate, onupdate: onupdate(type)}, [
+              oncreate, onupdate: onupdate(item)}, [
               m('input[type=radio][name=action].mdl-radio__button', {
-                checked: type.active ? 'checked' : null,
-                onchange: events.change(type)
+                checked: item.active ? 'checked' : null,
+                onchange: events.change(item)
               }),
-              m('span.mdl-radio__label', type.title)
+              m('span.mdl-radio__label', m('em', item.icon), item.title)
             ])
           )
         )
-      ]),
-
-      (state.shortcut || null) &&
-      m('.bs-callout',
-        m('p', 'You can also use ', m('code', state.shortcut), ' to capture screenshot')
       ),
 
-      (!state.shortcut || null) &&
-      m('.bs-callout', [
-        m('p', 'Navigate to ', m('code', 'chrome://extensions'),
-          ' and scroll down to the bottom of the page.'),
-        m('p', 'Click on ', m('code', 'Keyboard shortcuts'),
-          ' and set a key combination for capturing a screenshot.')
+      m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
+        m('h4', 'Keyboard Shortcut')
+      ),
+      m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop', [
+        (state.shortcut || null) &&
+        m('.bs-callout',
+          m('p', 'You can use ', m('code', state.shortcut), ' to capture screenshot.')
+        ),
+        (!state.shortcut || null) &&
+        m('.bs-callout',
+          m('p', 'You can also use a keyboard shortcut to capture screenshot.')
+        ),
+        m('.bs-callout', [
+          m('p', 'To set the keyboard shortcut:'),
+          m('p', '1. Navigate to ', m('code', 'chrome://extensions'),
+            ' and scroll down to the bottom of the page.'),
+          m('p', '2. Click on ', m('code', 'Keyboard shortcuts'),
+            ' and set a key combination for Screenshot Capture.')
+        ])
       ])
     ])
 })
