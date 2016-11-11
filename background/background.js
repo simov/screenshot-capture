@@ -52,7 +52,7 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
             res({message: 'image', image: image})
           }
           else {
-            crop(req.crop, image, (cropped) => {
+            crop(req.crop, image, req.dpr, (cropped) => {
               res({message: 'image', image: cropped})
             })
           }
@@ -89,20 +89,22 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
   return true
 })
 
-function crop (area, image, done) {
+function crop (area, image, dpr, done) {
+  var top = area.y * dpr
+  var left = area.x * dpr
+  var width = area.w * dpr
+  var height = area.h * dpr
+
   var canvas = null
   if (!canvas) {
     canvas = document.createElement('canvas')
     document.body.appendChild(canvas)
   }
-
-  var top = area.y, left = area.x
-  var width = area.w, height = area.h
+  canvas.width = width
+  canvas.height = height
 
   var img = new Image()
   img.onload = () => {
-    canvas.width = width
-    canvas.height = height
     var context = canvas.getContext('2d')
     context.drawImage(img,
       left, top,

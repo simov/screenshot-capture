@@ -69,7 +69,7 @@ function capture (force) {
     if (state.selection && (res.action === 'crop' || (res.action === 'wait' && force))) {
       jcrop.release()
       setTimeout(() => {
-        chrome.runtime.sendMessage({message: 'capture', crop: state.selection}, (res) => {
+        chrome.runtime.sendMessage({message: 'capture', crop: state.selection, dpr: devicePixelRatio}, (res) => {
           state.active = false
           state.selection = null
           $('.jcrop-holder').hide()
