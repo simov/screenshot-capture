@@ -65,8 +65,8 @@ function init (done) {
 }
 
 function capture (force) {
-  chrome.storage.sync.get((res) => {
-    if (state.selection && (res.action === 'crop' || (res.action === 'wait' && force))) {
+  chrome.storage.sync.get((config) => {
+    if (state.selection && (config.method === 'crop' || (config.method === 'wait' && force))) {
       jcrop.release()
       setTimeout(() => {
         chrome.runtime.sendMessage({
@@ -80,7 +80,7 @@ function capture (force) {
         })
       }, 50)
     }
-    else if (res.action === 'view') {
+    else if (config.method === 'view') {
       chrome.runtime.sendMessage({
         message: 'capture', area: {x: 0, y: 0, w: innerWidth, h: innerHeight}, dpr: devicePixelRatio
       }, (res) => {

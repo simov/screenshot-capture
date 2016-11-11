@@ -13,12 +13,12 @@ var state = {
   ]
 }
 
-chrome.storage.sync.get((res) => {
+chrome.storage.sync.get((config) => {
   state.methods.forEach((item) => {
-    item.checked = (item.id === res.action)
+    item.checked = (item.id === config.method)
   })
   state.dpr.forEach((item) => {
-    item.checked = (item.id === res.dpr)
+    item.checked = (item.id === config.dpr)
   })
   m.redraw()
 })
@@ -33,7 +33,7 @@ var change = {
   method: (item) => (e) => {
     state.methods.forEach((item) => (item.checked = false))
     item.checked = true
-    chrome.storage.sync.set({action: item.id})
+    chrome.storage.sync.set({method: item.id})
   },
   dpr: (item) => (e) => {
     state.dpr.forEach((item) => (item.checked = false))
@@ -63,7 +63,7 @@ m.mount(document.querySelector('main'), {
         m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
           m('label.mdl-radio mdl-js-radio mdl-js-ripple-effect', {
             oncreate, onupdate: onupdate(item)}, [
-            m('input[type=radio][name=action].mdl-radio__button', {
+            m('input[type=radio][name=method].mdl-radio__button', {
               checked: item.active ? 'checked' : null,
               onchange: change.method(item)
             }),
@@ -81,7 +81,7 @@ m.mount(document.querySelector('main'), {
         m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
           m('label.mdl-radio mdl-js-radio mdl-js-ripple-effect', {
             oncreate, onupdate: onupdate(item)}, [
-            m('input[type=radio][name=action].mdl-radio__button', {
+            m('input[type=radio][name=method].mdl-radio__button', {
               checked: item.active ? 'checked' : null,
               onchange: change.dpr(item)
             }),

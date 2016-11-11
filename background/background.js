@@ -1,11 +1,11 @@
 
 // chrome.storage.sync.clear()
 
-chrome.storage.sync.get((res) => {
-  if (!res.action) {
-    chrome.storage.sync.set({action: 'crop'})
+chrome.storage.sync.get((config) => {
+  if (!config.method) {
+    chrome.storage.sync.set({method: 'crop'})
   }
-  if (res.dpr === undefined) {
+  if (config.dpr === undefined) {
     chrome.storage.sync.set({dpr: true})
   }
 })
@@ -51,7 +51,7 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
         // image is base64
 
         chrome.storage.sync.get((config) => {
-          if (config.action === 'view') {
+          if (config.method === 'view') {
             if (req.dpr !== 1 && !config.dpr) {
               crop(image, req.area, req.dpr, config.dpr, (cropped) => {
                 res({message: 'image', image: cropped})
@@ -72,20 +72,20 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
   }
   else if (req.message === 'active') {
     if (req.active) {
-      chrome.storage.sync.get((res) => {
-        if (res.action === 'view') {
+      chrome.storage.sync.get((config) => {
+        if (config.method === 'view') {
           chrome.browserAction.setTitle({tabId: sender.tab.id, title: 'Capture Viewport'})
           chrome.browserAction.setBadgeText({tabId: sender.tab.id, text: '⬒'})
         }
-        // else if (res.action === 'full') {
+        // else if (config.method === 'full') {
         //   chrome.browserAction.setTitle({tabId: sender.tab.id, title: 'Capture Document'})
         //   chrome.browserAction.setBadgeText({tabId: sender.tab.id, text: '⬛'})
         // }
-        else if (res.action === 'crop') {
+        else if (config.method === 'crop') {
           chrome.browserAction.setTitle({tabId: sender.tab.id, title: 'Crop and Save'})
           chrome.browserAction.setBadgeText({tabId: sender.tab.id, text: '◩'})
         }
-        else if (res.action === 'wait') {
+        else if (config.method === 'wait') {
           chrome.browserAction.setTitle({tabId: sender.tab.id, title: 'Crop and Wait'})
           chrome.browserAction.setBadgeText({tabId: sender.tab.id, text: '◪'})
         }
