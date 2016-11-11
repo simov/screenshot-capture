@@ -69,7 +69,9 @@ function capture (force) {
     if (state.selection && (res.action === 'crop' || (res.action === 'wait' && force))) {
       jcrop.release()
       setTimeout(() => {
-        chrome.runtime.sendMessage({message: 'capture', crop: state.selection, dpr: devicePixelRatio}, (res) => {
+        chrome.runtime.sendMessage({
+          message: 'capture', area: state.selection, dpr: devicePixelRatio
+        }, (res) => {
           state.active = false
           state.selection = null
           $('.jcrop-holder').hide()
@@ -79,7 +81,9 @@ function capture (force) {
       }, 50)
     }
     else if (res.action === 'view') {
-      chrome.runtime.sendMessage({message: 'capture'}, (res) => {
+      chrome.runtime.sendMessage({
+        message: 'capture', area: {x: 0, y: 0, w: innerWidth, h: innerHeight}, dpr: devicePixelRatio
+      }, (res) => {
         state.active = false
         $('.jcrop-holder').hide()
         chrome.runtime.sendMessage({message: 'active', active: state.active})

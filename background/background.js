@@ -50,12 +50,19 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
       chrome.tabs.captureVisibleTab(tab.windowId, {format: 'png'}, (image) => {
         // image is base64
 
-        chrome.storage.sync.get((_res) => {
-          if (_res.action === 'view') {
-            res({message: 'image', image: image})
+        chrome.storage.sync.get((config) => {
+          if (config.action === 'view') {
+            if (req.dpr !== 1 && !config.dpr) {
+              crop(image, req.area, req.dpr, config.dpr, (cropped) => {
+                res({message: 'image', image: cropped})
+              })
+            }
+            else {
+              res({message: 'image', image: image})
+            }
           }
           else {
-            crop(req.crop, image, req.dpr, _res.dpr, (cropped) => {
+            crop(image, req.area, req.dpr, config.dpr, (cropped) => {
               res({message: 'image', image: cropped})
             })
           }
@@ -92,13 +99,13 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
   return true
 })
 
-function crop (area, image, dpr, preserve, done) {
+function crop (image, area, dpr, preserve, done) {
   var top = area.y * dpr
   var left = area.x * dpr
   var width = area.w * dpr
   var height = area.h * dpr
-  var w = preserve ? width : area.w
-  var h = preserve ? height : area.h
+  var w = (dpr !== 1 && preserve) ? width : area.w
+  var h = (dpr !== 1 && preserve) ? height : area.h
 
   var canvas = null
   if (!canvas) {

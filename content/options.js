@@ -73,7 +73,9 @@ m.mount(document.querySelector('main'), {
       ),
 
       m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
-        m('h4', 'Screenshot Size')
+        m('h4', 'Screenshot Size',
+          m('span', 'Only for ', m('code', 'HDPI'), ' displays like Retina')
+        )
       ),
       state.dpr.map((item) =>
         m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
