@@ -1,17 +1,24 @@
 
 var state = {
   shortcut: {},
-  types: [
+  methods: [
     {id: 'view', icon: '⬒', title: 'Capture Viewport'},
     // {id: 'full', icon: '⬛', title: 'Capture Document'},
     {id: 'crop', icon: '◩', title: 'Crop and Save'},
     {id: 'wait', icon: '◪', title: 'Crop and Wait'}
+  ],
+  dpr: [
+    {id: true, title: 'Preserve original DPI size'},
+    {id: false, title: 'Adjust to actual size'}
   ]
 }
 
 chrome.storage.sync.get((res) => {
-  state.types.forEach((type) => {
-    type.checked = (type.id === res.action)
+  state.methods.forEach((item) => {
+    item.checked = (item.id === res.action)
+  })
+  state.dpr.forEach((item) => {
+    item.checked = (item.id === res.dpr)
   })
   m.redraw()
 })
@@ -22,13 +29,16 @@ chrome.commands.getAll((commands) => {
   m.redraw()
 })
 
-var events = {
-  change: (type) => (e) => {
-    state.types.forEach((type) => {
-      type.checked = false
-    })
-    type.checked = true
-    chrome.storage.sync.set({action: type.id})
+var change = {
+  method: (item) => (e) => {
+    state.methods.forEach((item) => (item.checked = false))
+    item.checked = true
+    chrome.storage.sync.set({action: item.id})
+  },
+  dpr: (item) => (e) => {
+    state.dpr.forEach((item) => (item.checked = false))
+    item.checked = true
+    chrome.storage.sync.set({dpr: item.id})
   }
 }
 
@@ -49,15 +59,31 @@ m.mount(document.querySelector('main'), {
           m('span', 'The screenshots are saved in ', m('code', 'PNG'), ' format')
         )
       ),
-      state.types.map((item) =>
+      state.methods.map((item) =>
         m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
           m('label.mdl-radio mdl-js-radio mdl-js-ripple-effect', {
             oncreate, onupdate: onupdate(item)}, [
             m('input[type=radio][name=action].mdl-radio__button', {
               checked: item.active ? 'checked' : null,
-              onchange: events.change(item)
+              onchange: change.method(item)
             }),
             m('span.mdl-radio__label', m('em', item.icon), item.title)
+          ])
+        )
+      ),
+
+      m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
+        m('h4', 'Screenshot Size')
+      ),
+      state.dpr.map((item) =>
+        m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
+          m('label.mdl-radio mdl-js-radio mdl-js-ripple-effect', {
+            oncreate, onupdate: onupdate(item)}, [
+            m('input[type=radio][name=action].mdl-radio__button', {
+              checked: item.active ? 'checked' : null,
+              onchange: change.dpr(item)
+            }),
+            m('span.mdl-radio__label', item.title)
           ])
         )
       ),

@@ -5,6 +5,9 @@ chrome.storage.sync.get((res) => {
   if (!res.action) {
     chrome.storage.sync.set({action: 'crop'})
   }
+  if (res.dpr === undefined) {
+    chrome.storage.sync.set({dpr: true})
+  }
 })
 
 function inject (tab) {
@@ -52,7 +55,7 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
             res({message: 'image', image: image})
           }
           else {
-            crop(req.crop, image, req.dpr, (cropped) => {
+            crop(req.crop, image, req.dpr, _res.dpr, (cropped) => {
               res({message: 'image', image: cropped})
             })
           }
@@ -89,19 +92,21 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
   return true
 })
 
-function crop (area, image, dpr, done) {
+function crop (area, image, dpr, preserve, done) {
   var top = area.y * dpr
   var left = area.x * dpr
   var width = area.w * dpr
   var height = area.h * dpr
+  var w = preserve ? width : area.w
+  var h = preserve ? height : area.h
 
   var canvas = null
   if (!canvas) {
     canvas = document.createElement('canvas')
     document.body.appendChild(canvas)
   }
-  canvas.width = width
-  canvas.height = height
+  canvas.width = w
+  canvas.height = h
 
   var img = new Image()
   img.onload = () => {
@@ -110,7 +115,7 @@ function crop (area, image, dpr, done) {
       left, top,
       width, height,
       0, 0,
-      width, height
+      w, h
     )
 
     var cropped = canvas.toDataURL('image/png')
