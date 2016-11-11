@@ -10,22 +10,23 @@
 - Capture Viewport
 - Crop and Save (automatic save)
 - Crop and Wait (manual save)
+- Preserve or downscale screenshot size on HDPI displays
 
 > The screenshots are saved in PNG format.
 
 
-## Set Capture Method
+## Options
 
 1. Click on the extension button using your **Right** Mouse Button.
 2. Select `Options` from the context menu.
 
-Alternatively:
+> Alternatively:
 
 1. Navigate to `chrome://extensions` and find the Screenshot Capture extension.
 2. Click on the `Options` link under the Screenshot Capture extension.
 
 
-## Set Keyboard Shortcut
+## Keyboard Shortcut
 
 1. Navigate to `chrome://extensions` and scroll down to the bottom of the page.
 2. Click on `Keyboard shortcuts` and set a key combination for Screenshot Capture.
