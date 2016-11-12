@@ -10,9 +10,8 @@
 - Capture Viewport
 - Crop and Save (automatic save)
 - Crop and Wait (manual save)
-- Preserve or downscale screenshot size on HDPI displays
-
-> The screenshots are saved in PNG format.
+- Preserve or downscale screenshot size on HDPI displays like Retina
+- The screenshots are saved in PNG format
 
 
 ## Options
