@@ -93,6 +93,19 @@ function capture (force) {
   })
 }
 
+function filename () {
+  var pad = (n) => ((n = n + '') && (n.length >= 2 ? n : '0' + n))
+  var timestamp = ((now) =>
+    [pad(now.getFullYear()), pad(now.getMonth() + 1), pad(now.getDate())].join('-')
+    + ' - ' +
+    [pad(now.getHours()), pad(now.getMinutes()), pad(now.getSeconds())].join('-')
+  )(new Date())
+  return 'Screenshot Capture - ' + timestamp + '.png'
+}
+
 function save (image) {
-  document.location.href = image.replace('image/png', 'image/octet-stream')
+  var link = document.createElement('a')
+  link.download = filename()
+  link.href = image
+  link.click()
 }
