@@ -22,7 +22,8 @@
   },
 
   "web_accessible_resources": [
-    "/images/Jcrop.gif"
+    "/images/Jcrop.gif",
+    "/images/pixel.png"
   ],
 
   "commands": {
