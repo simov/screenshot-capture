@@ -1,3 +1,9 @@
 
-#fake-image { width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 1; }
+#fake-image {
+  width: 100% !important; height: 100% !important;
+  position: fixed; top: 0; left: 0; z-index: 1;
+}
+
 .jcrop-holder { z-index: 999999 !important; }
+.jcrop-holder img { width: 100% !important; height: 100% !important; }
+.jcrop-tracker { width: 100% !important; height: 100% !important; }
