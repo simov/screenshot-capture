@@ -10,8 +10,11 @@
 - Capture Viewport
 - Crop and Save (automatic save)
 - Crop and Wait (manual save)
+- Configurable Keyboard Shortcut
 - Preserve or downscale screenshot size on HDPI displays like Retina
-- The screenshots are saved in PNG format
+- Unique screenshot date/time file name
+- Save screenshots in PNG file format
+- Open Source
 
 
 ## Options
