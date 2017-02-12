@@ -1,104 +1,87 @@
 
-var jcrop
-var state = {
-  active: false,
-  selection: null
-}
+var jcrop, selection
 
-chrome.runtime.onMessage.addListener((req, sender, res) => {
-  if (req.message === 'init') {
-    res({}) // prevent re-injecting
+var overlay = ((active) => (state) => {
+  active = (state !== undefined) ? state : !active
+  $('.jcrop-holder')[active ? 'show' : 'hide']()
+  chrome.runtime.sendMessage({message: 'active', active})
+})(false)
 
-    if (!jcrop) {
-      init(() => {
-        state.active = !state.active
-        $('.jcrop-holder')[state.active ? 'show' : 'hide']()
-        chrome.runtime.sendMessage({message: 'active', active: state.active})
-        capture()
-      })
-    }
-    else {
-      state.active = !state.active
-      $('.jcrop-holder')[state.active ? 'show' : 'hide']()
-      chrome.runtime.sendMessage({message: 'active', active: state.active})
-      capture(true)
-    }
-  }
-  return true
-})
-
-function init (done) {
-  // add fake image
+var image = (done) => {
   var image = new Image()
   image.id = 'fake-image'
   image.src = chrome.runtime.getURL('/images/pixel.png')
   image.onload = () => {
     $('body').append(image)
-
-    // init jcrop
-    $('#fake-image').Jcrop({
-      bgColor: 'none',
-      onSelect: (e) => {
-        state.selection = e
-        capture()
-      },
-      onChange: (e) => {
-        state.selection = e
-      },
-      onRelease: (e) => {
-        setTimeout(() => {
-          state.selection = null
-        }, 100)
-      }
-    }, function ready () {
-      jcrop = this
-
-      // fix styles
-      $('.jcrop-holder').css({
-        position: 'fixed', top: 0, left: 0,
-        width: '100%', height: '100%', zIndex: 10000
-      })
-      $('.jcrop-hline, .jcrop-vline').css({
-        backgroundImage: 'url(' + chrome.runtime.getURL('/images/Jcrop.gif') + ')'
-      })
-      // hide jcrop holder by default
-      $('.jcrop-holder').hide()
-
-      done()
-    })
+    done()
   }
 }
 
-function capture (force) {
+var init = (done) => {
+  $('#fake-image').Jcrop({
+    bgColor: 'none',
+    onSelect: (e) => {
+      selection = e
+      capture()
+    },
+    onChange: (e) => {
+      selection = e
+    },
+    onRelease: (e) => {
+      setTimeout(() => {
+        selection = null
+      }, 100)
+    }
+  }, function ready () {
+    jcrop = this
+
+    // fix styles
+    $('.jcrop-holder').css({
+      position: 'fixed', top: 0, left: 0,
+      width: '100%', height: '100%', zIndex: 10000
+    })
+    $('.jcrop-hline, .jcrop-vline').css({
+      backgroundImage: 'url(' + chrome.runtime.getURL('/images/Jcrop.gif') + ')'
+    })
+
+    if (selection) {
+      jcrop.setSelect([
+        selection.x, selection.y,
+        selection.x2, selection.y2
+      ])
+    }
+
+    done && done()
+  })
+}
+
+var capture = (force) => {
   chrome.storage.sync.get((config) => {
-    if (state.selection && (config.method === 'crop' || (config.method === 'wait' && force))) {
+    if (selection && (config.method === 'crop' || (config.method === 'wait' && force))) {
       jcrop.release()
       setTimeout(() => {
         chrome.runtime.sendMessage({
-          message: 'capture', area: state.selection, dpr: devicePixelRatio
+          message: 'capture', area: selection, dpr: devicePixelRatio
         }, (res) => {
-          state.active = false
-          state.selection = null
-          $('.jcrop-holder').hide()
-          chrome.runtime.sendMessage({message: 'active', active: state.active})
+          overlay(false)
+          selection = null
           save(res.image)
         })
       }, 50)
     }
     else if (config.method === 'view') {
       chrome.runtime.sendMessage({
-        message: 'capture', area: {x: 0, y: 0, w: innerWidth, h: innerHeight}, dpr: devicePixelRatio
+        message: 'capture',
+        area: {x: 0, y: 0, w: innerWidth, h: innerHeight}, dpr: devicePixelRatio
       }, (res) => {
-        state.active = false
-        $('.jcrop-holder').hide()
-        chrome.runtime.sendMessage({message: 'active', active: state.active})
+        overlay(false)
         save(res.image)
       })
     }
   })
 }
 
-function filename () {
+var filename = () => {
   var pad = (n) => ((n = n + '') && (n.length >= 2 ? n : '0' + n))
   var timestamp = ((now) =>
     [pad(now.getFullYear()), pad(now.getMonth() + 1), pad(now.getDate())].join('-')
@@ -108,9 +91,35 @@ function filename () {
   return 'Screenshot Capture - ' + timestamp + '.png'
 }
 
-function save (image) {
+var save = (image) => {
   var link = document.createElement('a')
   link.download = filename()
   link.href = image
   link.click()
 }
+
+window.addEventListener('resize', ((timeout) => () => {
+  clearTimeout(timeout)
+  timeout = setTimeout(() => {
+    jcrop.destroy()
+    init()
+  }, 100)
+})())
+
+chrome.runtime.onMessage.addListener((req, sender, res) => {
+  if (req.message === 'init') {
+    res({}) // prevent re-injecting
+
+    if (!jcrop) {
+      image(() => init(() => {
+        overlay()
+        capture()
+      }))
+    }
+    else {
+      overlay()
+      capture(true)
+    }
+  }
+  return true
+})
