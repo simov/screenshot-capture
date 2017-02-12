@@ -29,7 +29,7 @@ chrome.commands.getAll((commands) => {
   m.redraw()
 })
 
-var change = {
+var events = {
   method: (item) => (e) => {
     state.methods.forEach((item) => (item.checked = false))
     item.checked = true
@@ -53,7 +53,7 @@ var onupdate = (type) => (vnode) => {
 
 m.mount(document.querySelector('main'), {
   view: () =>
-    m('.mdl-grid', [
+    m('.mdl-grid',
       m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
         m('h4', 'Capture Method',
           m('span', 'The screenshots are saved in ', m('code', 'PNG'), ' format')
@@ -62,13 +62,13 @@ m.mount(document.querySelector('main'), {
       state.methods.map((item) =>
         m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
           m('label.mdl-radio mdl-js-radio mdl-js-ripple-effect', {
-            oncreate, onupdate: onupdate(item)}, [
+            oncreate, onupdate: onupdate(item)},
             m('input[type=radio][name=method].mdl-radio__button', {
               checked: item.active ? 'checked' : null,
-              onchange: change.method(item)
+              onchange: events.method(item)
             }),
             m('span.mdl-radio__label', m('em', item.icon), item.title)
-          ])
+          )
         )
       ),
 
@@ -80,32 +80,32 @@ m.mount(document.querySelector('main'), {
       state.dpr.map((item) =>
         m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
           m('label.mdl-radio mdl-js-radio mdl-js-ripple-effect', {
-            oncreate, onupdate: onupdate(item)}, [
+            oncreate, onupdate: onupdate(item)},
             m('input[type=radio][name=method].mdl-radio__button', {
               checked: item.active ? 'checked' : null,
-              onchange: change.dpr(item)
+              onchange: events.dpr(item)
             }),
             m('span.mdl-radio__label', item.title)
-          ])
+          )
         )
       ),
 
       m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
-        m('h4', 'Keyboard Shortcut', [
+        m('h4', 'Keyboard Shortcut',
           (state.shortcut || null) &&
           m('span', 'You can use ', m('code', state.shortcut), ' to capture screenshot'),
           (!state.shortcut || null) &&
           m('span', 'Currently there is no keyboard shortcut set')
-        ])
+        )
       ),
-      m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop', [
-        m('.bs-callout', [
+      m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
+        m('.bs-callout',
           m('p', 'To set the keyboard shortcut:'),
           m('p', '1. Navigate to ', m('code', 'chrome://extensions'),
             ' and scroll down to the bottom of the page.'),
           m('p', '2. Click on ', m('code', 'Keyboard shortcuts'),
             ' and set a key combination for Screenshot Capture.')
-        ])
-      ])
-    ])
+        )
+      )
+    )
 })
