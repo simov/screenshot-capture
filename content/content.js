@@ -2,7 +2,7 @@
 var jcrop, selection
 
 var overlay = ((active) => (state) => {
-  active = (state !== undefined) ? state : !active
+  active = (typeof state === 'boolean') ? state : (state === null) ? active : !active
   $('.jcrop-holder')[active ? 'show' : 'hide']()
   chrome.runtime.sendMessage({message: 'active', active})
 })(false)
@@ -97,7 +97,7 @@ window.addEventListener('resize', ((timeout) => () => {
   clearTimeout(timeout)
   timeout = setTimeout(() => {
     jcrop.destroy()
-    init()
+    init(() => overlay(null))
   }, 100)
 })())
 
