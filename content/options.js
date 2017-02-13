@@ -56,7 +56,7 @@ m.mount(document.querySelector('main'), {
     m('.mdl-grid',
       m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
         m('h4', 'Capture Method',
-          m('span', 'The screenshots are saved in ', m('code', 'PNG'), ' format')
+          m('span', 'Saved in ', m('code', 'PNG'), ' file format')
         )
       ),
       state.methods.map((item) =>
@@ -93,19 +93,17 @@ m.mount(document.querySelector('main'), {
       m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
         m('h4', 'Keyboard Shortcut',
           (state.shortcut || null) &&
-          m('span', 'You can use ', m('code', state.shortcut), ' to capture screenshot'),
+          m('span', 'Press ', m('code', state.shortcut), ' to capture screenshot'),
           (!state.shortcut || null) &&
           m('span', 'Currently there is no keyboard shortcut set')
         )
       ),
       m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
-        m('.bs-callout',
-          m('p', 'To set the keyboard shortcut:'),
-          m('p', '1. Navigate to ', m('code', 'chrome://extensions'),
-            ' and scroll down to the bottom of the page.'),
-          m('p', '2. Click on ', m('code', 'Keyboard shortcuts'),
-            ' and set a key combination for Screenshot Capture.')
-        )
+        m('p', 'To set a keyboard shortcut:'),
+        m('p', '1. Navigate to ', m('code', 'chrome://extensions'),
+          ' and scroll down to the bottom of the page.'),
+        m('p', '2. Click on ', m('code', 'Keyboard shortcuts'),
+          ' and set a key combination for Screenshot Capture.')
       )
     )
 })

@@ -42,11 +42,19 @@ footer, #footer-push {
 /*screenshot-capture*/
 
 
+/*common*/
+body { letter-spacing: 0.2px; }
+p {
+  font-size: 16px;
+  letter-spacing: 0.2px;
+}
+
+
 /*capture-method*/
 h4 { margin-bottom: 0; }
 h4:after { content: ''; display: block; clear: both; }
 h4 span {
-  font-size: 14px; line-height: 32px; font-weight: normal;
+  font-size: 16px; line-height: 32px; font-weight: normal;
   display: inline-block; float: right;
 }
 code { background: #ececec; padding: 5px; border-radius: 5px; }
@@ -71,13 +79,3 @@ code { background: #ececec; padding: 5px; border-radius: 5px; }
   position: relative; top: -1px;
   font-style: normal; padding: 0 10px 0 0;
 }
-
-/*keyboard-shortcut*/
-.bs-callout {
-  padding: 20px;
-  margin: 20px 0;
-  border: 1px solid #eee;
-  border-left-width: 5px;
-  border-radius: 3px;
-}
-.bs-callout p:last-child { margin: 0; }
