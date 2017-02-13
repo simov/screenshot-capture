@@ -35,11 +35,6 @@ var init = (done) => {
   }, function ready () {
     jcrop = this
 
-    // fix styles
-    $('.jcrop-holder').css({
-      position: 'fixed', top: 0, left: 0,
-      width: '100%', height: '100%', zIndex: 10000
-    })
     $('.jcrop-hline, .jcrop-vline').css({
       backgroundImage: 'url(' + chrome.runtime.getURL('/images/Jcrop.gif') + ')'
     })
