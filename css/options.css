@@ -23,6 +23,7 @@ footer, #footer-push {
 }
 .mdl-layout__content {
   display: block;
+  padding-bottom: 50px;
 }
 
 /*header*/
@@ -78,4 +79,22 @@ code { background: #ececec; padding: 5px; border-radius: 5px; }
 .mdl-radio__label em {
   position: relative; top: -1px;
   font-style: normal; padding: 0 10px 0 0;
+}
+
+
+/*bootstrap callout*/
+.bs-callout {
+  padding: 20px;
+  margin: 20px 0 0;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-left-color: #607d8b;
+  border-radius: 3px;
+  background: #fcfcfc;
+}
+.bs-callout h4 {
+  margin-top: 0;
+}
+.bs-callout .mdl-cell {
+  margin-left: 0px;
 }

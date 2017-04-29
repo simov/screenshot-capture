@@ -55,55 +55,61 @@ m.mount(document.querySelector('main'), {
   view: () =>
     m('.mdl-grid',
       m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
-        m('h4', 'Capture Method',
-          m('span', 'Saved in ', m('code', 'PNG'), ' file format')
-        )
-      ),
-      state.methods.map((item) =>
-        m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
-          m('label.mdl-radio mdl-js-radio mdl-js-ripple-effect', {
-            oncreate, onupdate: onupdate(item)},
-            m('input[type=radio][name=method].mdl-radio__button', {
-              checked: item.active ? 'checked' : null,
-              onchange: events.method(item)
-            }),
-            m('span.mdl-radio__label', m('em', item.icon), item.title)
+        m('.bs-callout',
+          m('h4', 'Capture Method',
+            m('span', 'Saved in ', m('code', 'PNG'), ' file format')
+          ),
+          state.methods.map((item) =>
+            m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
+              m('label.mdl-radio mdl-js-radio mdl-js-ripple-effect', {
+                oncreate, onupdate: onupdate(item)},
+                m('input[type=radio][name=method].mdl-radio__button', {
+                  checked: item.active ? 'checked' : null,
+                  onchange: events.method(item)
+                }),
+                m('span.mdl-radio__label', m('em', item.icon), item.title)
+              )
+            )
           )
         )
       ),
 
       m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
-        m('h4', 'Screenshot Size',
-          m('span', 'Only for ', m('code', 'HDPI'), ' displays like Retina')
-        )
-      ),
-      state.dpr.map((item) =>
-        m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
-          m('label.mdl-radio mdl-js-radio mdl-js-ripple-effect', {
-            oncreate, onupdate: onupdate(item)},
-            m('input[type=radio][name=method].mdl-radio__button', {
-              checked: item.active ? 'checked' : null,
-              onchange: events.dpr(item)
-            }),
-            m('span.mdl-radio__label', item.title)
+        m('.bs-callout',
+          m('h4', 'Screenshot Size',
+            m('span', 'Only for ', m('code', 'HDPI'), ' displays like Retina')
+          ),
+          state.dpr.map((item) =>
+            m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
+              m('label.mdl-radio mdl-js-radio mdl-js-ripple-effect', {
+                oncreate, onupdate: onupdate(item)},
+                m('input[type=radio][name=method].mdl-radio__button', {
+                  checked: item.active ? 'checked' : null,
+                  onchange: events.dpr(item)
+                }),
+                m('span.mdl-radio__label', item.title)
+              )
+            )
           )
         )
       ),
 
       m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
-        m('h4', 'Keyboard Shortcut',
-          (state.shortcut || null) &&
-          m('span', 'Press ', m('code', state.shortcut), ' to capture screenshot'),
-          (!state.shortcut || null) &&
-          m('span', 'Currently there is no keyboard shortcut set')
+        m('.bs-callout',
+          m('h4', 'Keyboard Shortcut',
+            (state.shortcut || null) &&
+            m('span', 'Press ', m('code', state.shortcut), ' to capture screenshot'),
+            (!state.shortcut || null) &&
+            m('span', 'Currently there is no keyboard shortcut set')
+          ),
+          m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
+            m('p', 'To set a keyboard shortcut:'),
+            m('p', '1. Navigate to ', m('code', 'chrome://extensions'),
+              ' and scroll down to the bottom of the page.'),
+            m('p', '2. Click on ', m('code', 'Keyboard shortcuts'),
+              ' and set a key combination for Screenshot Capture.')
+          )
         )
-      ),
-      m('.mdl-cell mdl-cell--8-col-tablet mdl-cell--12-col-desktop',
-        m('p', 'To set a keyboard shortcut:'),
-        m('p', '1. Navigate to ', m('code', 'chrome://extensions'),
-          ' and scroll down to the bottom of the page.'),
-        m('p', '2. Click on ', m('code', 'Keyboard shortcuts'),
-          ' and set a key combination for Screenshot Capture.')
       )
     )
 })
