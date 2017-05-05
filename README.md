@@ -14,6 +14,7 @@
 - Preserve or downscale screenshot size on HDPI displays like Retina
 - Unique screenshot date/time file name
 - Save screenshots in PNG file format
+- No special permissions required
 - Open Source
 
 
