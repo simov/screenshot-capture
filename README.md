@@ -1,8 +1,8 @@
 
-# Screenshot Capture / Chrome Extension
+# Screenshot Capture / Browser Extension
 
 
-## [Install][1]
+**Install: [Chrome][chrome-store]** / **Donate: [PayPal][paypal]**
 
 
 ## Features
@@ -39,7 +39,7 @@
 
 The MIT License (MIT)
 
-Copyright (c) 2014-2017 Simeon Velichkov <simeonvelichkov@gmail.com>
+Copyright (c) 2014-2018 Simeon Velichkov <simeonvelichkov@gmail.com> (https://github.com/simov/screenshot-capture)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -60,4 +60,5 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-  [1]: https://chrome.google.com/webstore/detail/screenshot-capture/giabbpobpebjfegnpcclkocepcgockkc
+  [chrome-store]: https://chrome.google.com/webstore/detail/screenshot-capture/giabbpobpebjfegnpcclkocepcgockkc
+  [paypal]: https://www.paypal.me/simeonvelichkov
