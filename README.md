@@ -2,10 +2,10 @@
 # Screenshot Capture / Browser Extension
 
 
-**Install: [Chrome][chrome-store]** / **Donate: [PayPal][paypal]**
+**Install: [Chrome]** / **Donate: [PayPal]**
 
 
-## Features
+# Features
 
 - Capture Viewport
 - Crop and Save (automatic save)
@@ -18,28 +18,30 @@
 - Open Source
 
 
-## Options
+# Options
 
-1. Click on the extension button using your **Right** Mouse Button.
-2. Select `Options` from the context menu.
+1. Click on the extension button using your **Right** Mouse Button
+2. Select `Options` from the context menu
 
 > Alternatively:
 
-1. Navigate to `chrome://extensions` and find the Screenshot Capture extension.
-2. Click on the `Options` link under the Screenshot Capture extension.
+1. Navigate to `chrome://extensions` and find the Screenshot Capture extension
+2. Click on the `Details` button
+3. Find the `Extension options` link and click on it
 
 
-## Keyboard Shortcut
+# Keyboard Shortcut
 
-1. Navigate to `chrome://extensions` and scroll down to the bottom of the page.
-2. Click on `Keyboard shortcuts` and set a key combination for Screenshot Capture.
+1. Navigate to `chrome://extensions`
+2. Click on the menu icon in the top left corner, and choose `Keyboard shortcuts` from the menu
+3. Find Screenshot Capture and set key combination for the `Take Screenshot` action
 
 
-## License
+# License
 
 The MIT License (MIT)
 
-Copyright (c) 2014-2018 Simeon Velichkov <simeonvelichkov@gmail.com> (https://github.com/simov/screenshot-capture)
+Copyright (c) 2014-present Simeon Velichkov <simeonvelichkov@gmail.com> (https://github.com/simov/screenshot-capture)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -60,5 +62,5 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-  [chrome-store]: https://chrome.google.com/webstore/detail/screenshot-capture/giabbpobpebjfegnpcclkocepcgockkc
+  [chrome]: https://chrome.google.com/webstore/detail/screenshot-capture/giabbpobpebjfegnpcclkocepcgockkc
   [paypal]: https://www.paypal.me/simeonvelichkov
