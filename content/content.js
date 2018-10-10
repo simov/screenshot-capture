@@ -60,7 +60,7 @@ var capture = (force) => {
         }, (res) => {
           overlay(false)
           selection = null
-          save(res.image)
+          save(res.image, config.format)
         })
       }, 50)
     }
@@ -70,24 +70,25 @@ var capture = (force) => {
         area: {x: 0, y: 0, w: innerWidth, h: innerHeight}, dpr: devicePixelRatio
       }, (res) => {
         overlay(false)
-        save(res.image)
+        save(res.image, config.format)
       })
     }
   })
 }
 
-var filename = () => {
+var filename = (format) => {
   var pad = (n) => (n = n + '', n.length >= 2 ? n : `0${n}`)
+  var ext = (format) => format === 'jpeg' ? 'jpg' : format === 'png' ? 'png' : 'png'
   var timestamp = (now) =>
     [pad(now.getFullYear()), pad(now.getMonth() + 1), pad(now.getDate())].join('-')
     + ' - ' +
     [pad(now.getHours()), pad(now.getMinutes()), pad(now.getSeconds())].join('-')
-  return `Screenshot Capture - ${timestamp(new Date())}.png`
+  return `Screenshot Capture - ${timestamp(new Date())}.${ext(format)}`
 }
 
-var save = (image) => {
+var save = (image, format) => {
   var link = document.createElement('a')
-  link.download = filename()
+  link.download = filename(format)
   link.href = image
   link.click()
 }

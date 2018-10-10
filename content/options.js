@@ -1,11 +1,15 @@
 
 var state = {
   shortcut: {},
-  methods: [
+  method: [
     {id: 'view', icon: '⬒', title: 'Capture Viewport'},
     // {id: 'full', icon: '⬛', title: 'Capture Document'},
     {id: 'crop', icon: '◩', title: 'Crop and Save'},
     {id: 'wait', icon: '◪', title: 'Crop and Wait'}
+  ],
+  format: [
+    {id: 'png', title: 'PNG'},
+    {id: 'jpeg', title: 'JPG'},
   ],
   dpr: [
     {id: true, title: 'Preserve original DPI size'},
@@ -14,12 +18,9 @@ var state = {
 }
 
 chrome.storage.sync.get((config) => {
-  state.methods.forEach((item) => {
-    item.checked = item.id === config.method
-  })
-  state.dpr.forEach((item) => {
-    item.checked = item.id === config.dpr
-  })
+  state.method.forEach((item) => item.checked = item.id === config.method)
+  state.format.forEach((item) => item.checked = item.id === config.format)
+  state.dpr.forEach((item) => item.checked = item.id === config.dpr)
   m.redraw()
 })
 
@@ -31,9 +32,14 @@ chrome.commands.getAll((commands) => {
 
 var events = {
   method: (item) => (e) => {
-    state.methods.forEach((item) => item.checked = false)
+    state.method.forEach((item) => item.checked = false)
     item.checked = true
     chrome.storage.sync.set({method: item.id})
+  },
+  format: (item) => (e) => {
+    state.format.forEach((item) => item.checked = false)
+    item.checked = true
+    chrome.storage.sync.set({format: item.id})
   },
   dpr: (item) => (e) => {
     state.dpr.forEach((item) => item.checked = false)
@@ -51,10 +57,8 @@ var onupdate = (item) => (vnode) => {
 m.mount(document.querySelector('main'), {
   view: () => [
     m('.bs-callout',
-      m('h4.mdc-typography--headline5', 'Capture Method',
-        m('span', 'Saved in ', m('code', 'PNG'), ' file format')
-      ),
-      state.methods.map((item) =>
+      m('h4.mdc-typography--headline5', 'Capture Method'),
+      state.method.map((item) =>
         m('label.s-label', {onupdate: onupdate(item)},
           m('.mdc-radio',
             m('input.mdc-radio__native-control', {
@@ -68,6 +72,26 @@ m.mount(document.querySelector('main'), {
             ),
           ),
           m('span', m('em', item.icon), item.title)
+        )
+      )
+    ),
+
+    m('.bs-callout',
+      m('h4.mdc-typography--headline5', 'Image Format'),
+      state.format.map((item) =>
+        m('label.s-label', {onupdate: onupdate(item)},
+          m('.mdc-radio',
+            m('input.mdc-radio__native-control', {
+              type: 'radio', name: 'format',
+              checked: item.checked && 'checked',
+              onchange: events.format(item)
+            }),
+            m('.mdc-radio__background',
+              m('.mdc-radio__outer-circle'),
+              m('.mdc-radio__inner-circle'),
+            ),
+          ),
+          m('span', item.title)
         )
       )
     ),

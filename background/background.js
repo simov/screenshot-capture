@@ -5,6 +5,9 @@ chrome.storage.sync.get((config) => {
   if (!config.method) {
     chrome.storage.sync.set({method: 'crop'})
   }
+  if (!config.format) {
+    chrome.storage.sync.set({format: 'png'})
+  }
   if (config.dpr === undefined) {
     chrome.storage.sync.set({dpr: true})
   }
@@ -45,15 +48,16 @@ chrome.commands.onCommand.addListener((command) => {
 
 chrome.runtime.onMessage.addListener((req, sender, res) => {
   if (req.message === 'capture') {
-    chrome.tabs.getSelected(null, (tab) => {
+    chrome.storage.sync.get((config) => {
 
-      chrome.tabs.captureVisibleTab(tab.windowId, {format: 'png'}, (image) => {
-        // image is base64
+      chrome.tabs.getSelected(null, (tab) => {
 
-        chrome.storage.sync.get((config) => {
+        chrome.tabs.captureVisibleTab(tab.windowId, {format: config.format}, (image) => {
+          // image is base64
+
           if (config.method === 'view') {
             if (req.dpr !== 1 && !config.dpr) {
-              crop(image, req.area, req.dpr, config.dpr, (cropped) => {
+              crop(image, req.area, req.dpr, config.dpr, config.format, (cropped) => {
                 res({message: 'image', image: cropped})
               })
             }
@@ -62,7 +66,7 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
             }
           }
           else {
-            crop(image, req.area, req.dpr, config.dpr, (cropped) => {
+            crop(image, req.area, req.dpr, config.dpr, config.format, (cropped) => {
               res({message: 'image', image: cropped})
             })
           }
@@ -99,7 +103,7 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
   return true
 })
 
-function crop (image, area, dpr, preserve, done) {
+function crop (image, area, dpr, preserve, format, done) {
   var top = area.y * dpr
   var left = area.x * dpr
   var width = area.w * dpr
@@ -125,7 +129,7 @@ function crop (image, area, dpr, preserve, done) {
       w, h
     )
 
-    var cropped = canvas.toDataURL('image/png')
+    var cropped = canvas.toDataURL(`image/${format}`)
     done(cropped)
   }
   img.src = image
