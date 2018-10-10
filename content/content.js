@@ -2,7 +2,7 @@
 var jcrop, selection
 
 var overlay = ((active) => (state) => {
-  active = (typeof state === 'boolean') ? state : (state === null) ? active : !active
+  active = typeof state === 'boolean' ? state : state === null ? active : !active
   $('.jcrop-holder')[active ? 'show' : 'hide']()
   chrome.runtime.sendMessage({message: 'active', active})
 })(false)
@@ -36,7 +36,7 @@ var init = (done) => {
     jcrop = this
 
     $('.jcrop-hline, .jcrop-vline').css({
-      backgroundImage: 'url(' + chrome.runtime.getURL('/images/Jcrop.gif') + ')'
+      backgroundImage: `url(${chrome.runtime.getURL('/images/Jcrop.gif')})`
     })
 
     if (selection) {
@@ -77,13 +77,12 @@ var capture = (force) => {
 }
 
 var filename = () => {
-  var pad = (n) => ((n = n + '') && (n.length >= 2 ? n : '0' + n))
-  var timestamp = ((now) =>
+  var pad = (n) => (n = n + '', n.length >= 2 ? n : `0${n}`)
+  var timestamp = (now) =>
     [pad(now.getFullYear()), pad(now.getMonth() + 1), pad(now.getDate())].join('-')
     + ' - ' +
     [pad(now.getHours()), pad(now.getMinutes()), pad(now.getSeconds())].join('-')
-  )(new Date())
-  return 'Screenshot Capture - ' + timestamp + '.png'
+  return `Screenshot Capture - ${timestamp(new Date())}.png`
 }
 
 var save = (image) => {

@@ -59,7 +59,7 @@ m.mount(document.querySelector('main'), {
           m('.mdc-radio',
             m('input.mdc-radio__native-control', {
               type: 'radio', name: 'method',
-              checked: item.checked ? 'checked' : null,
+              checked: item.checked && 'checked',
               onchange: events.method(item)
             }),
             m('.mdc-radio__background',
@@ -81,7 +81,7 @@ m.mount(document.querySelector('main'), {
           m('.mdc-radio',
             m('input.mdc-radio__native-control', {
               type: 'radio', name: 'dpr',
-              checked: item.checked ? 'checked' : null,
+              checked: item.checked && 'checked',
               onchange: events.dpr(item)
             }),
             m('.mdc-radio__background',
@@ -96,12 +96,11 @@ m.mount(document.querySelector('main'), {
 
     m('.bs-callout',
       m('h4.mdc-typography--headline5', 'Keyboard Shortcut',
-        (state.shortcut || null) &&
+        state.shortcut &&
         m('span', 'Press ', m('code', state.shortcut), ' to capture screenshot'),
-        (!state.shortcut || null) &&
+        !state.shortcut &&
         m('span', 'Currently there is no keyboard shortcut set')
       ),
-      m('p', 'To set a keyboard shortcut:'),
       m('p',
         '1. Navigate to ',
         m('code', 'chrome://extensions')
@@ -109,7 +108,7 @@ m.mount(document.querySelector('main'), {
       m('p',
         '2. Click on the menu icon ',
         m('span.icon-menu'),
-        ' in the top left corner, and choose ',
+        ' in the top left corner and choose ',
         m('code', 'Keyboard shortcuts'),
         ' from the menu'
       ),
