@@ -33,8 +33,30 @@
 # Keyboard Shortcut
 
 1. Navigate to `chrome://extensions`
-2. Click on the menu icon in the top left corner, and choose `Keyboard shortcuts` from the menu
+2. Click on the menu icon in the top left corner and choose `Keyboard shortcuts` from the menu
 3. Find Screenshot Capture and set key combination for the `Take Screenshot` action
+
+
+# Save Location
+
+1. Navigate to `chrome://settings`
+2. Click on the menu icon in the top left corner and expand the `Advanced` section in the sidebar menu
+3. Click on `Downloads`
+4. Change the default save `Location`
+5. Use the `Ask where to save ...` switch to toggle the autosaving
+
+
+# Page Zoom
+
+In case you have some pages zoomed in, you can enable the `Adjust to actual size` option from the options page to downscale the screenshot to the original size
+
+
+# Misc
+
+Note that the extension won't work on certain origins:
+
+- chrome-extension://...
+- https://chrome.google.com/webstore/category/extensions
 
 
 # License
