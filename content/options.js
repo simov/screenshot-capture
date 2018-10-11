@@ -31,20 +31,10 @@ chrome.commands.getAll((commands) => {
 })
 
 var events = {
-  method: (item) => (e) => {
-    state.method.forEach((item) => item.checked = false)
+  option: (name, item) => () => {
+    state[name].forEach((item) => item.checked = false)
     item.checked = true
-    chrome.storage.sync.set({method: item.id})
-  },
-  format: (item) => (e) => {
-    state.format.forEach((item) => item.checked = false)
-    item.checked = true
-    chrome.storage.sync.set({format: item.id})
-  },
-  dpr: (item) => (e) => {
-    state.dpr.forEach((item) => item.checked = false)
-    item.checked = true
-    chrome.storage.sync.set({dpr: item.id})
+    chrome.storage.sync.set({[name]: item.id})
   },
   button: (action) => () => {
     chrome.tabs.create({url: {
@@ -76,7 +66,7 @@ m.mount(document.querySelector('main'), {
             m('input.mdc-radio__native-control', {
               type: 'radio', name: 'method',
               checked: item.checked && 'checked',
-              onchange: events.method(item)
+              onchange: events.option('method', item)
             }),
             m('.mdc-radio__background',
               m('.mdc-radio__outer-circle'),
@@ -96,7 +86,7 @@ m.mount(document.querySelector('main'), {
             m('input.mdc-radio__native-control', {
               type: 'radio', name: 'format',
               checked: item.checked && 'checked',
-              onchange: events.format(item)
+              onchange: events.option('format', item)
             }),
             m('.mdc-radio__background',
               m('.mdc-radio__outer-circle'),
@@ -116,7 +106,7 @@ m.mount(document.querySelector('main'), {
             m('input.mdc-radio__native-control', {
               type: 'radio', name: 'dpr',
               checked: item.checked && 'checked',
-              onchange: events.dpr(item)
+              onchange: events.option('dpr', item)
             }),
             m('.mdc-radio__background',
               m('.mdc-radio__outer-circle'),
