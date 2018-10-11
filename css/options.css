@@ -35,6 +35,19 @@ main {
 header .mdc-toolbar__title { margin: 0; }
 header nav { float: right; margin: 0 !important; }
 header nav a { color: #fff !important; min-width: auto !important; }
+/*mdc-tab-bar*/
+header nav a {
+  font-size: .875rem;
+  line-height: 36px;
+  font-weight: 500;
+  letter-spacing: .08929em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 15px 24px;
+}
+header nav a:hover {
+  background: #5c7886;
+}
 
 
 /*footer*/
@@ -93,20 +106,29 @@ footer .icon-github:before {
 }
 
 
+/*button*/
+.s-button {
+  background-color: #ececec !important;
+  color: #000 !important;
+}
+.s-button:before {
+  background-color: rgba(96, 125, 139, 0.56) !important;
+}
+.s-button:after {
+  background-color: rgba(96, 125, 139, 0.56) !important;
+}
+
+
 /*misc*/
 h4 { margin: 0 0 10px 0; }
-h4:after { content: ''; display: block; clear: both; }
-h4 span {
-  font-size: 16px;
-  line-height: 32px;
-  display: inline-block;
-  float: right;
-}
 
 p {
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.2px;
+}
+p:last-child {
+  margin-bottom: 0;
 }
 code { background: #ececec; padding: 5px 8px; border-radius: 3px; }
 
@@ -120,6 +142,9 @@ code { background: #ececec; padding: 5px 8px; border-radius: 3px; }
   padding: 5px;
   margin: 0 0 8px 0;
   border-radius: 3px;
+}
+.s-label:last-child {
+  margin-bottom: 0;
 }
 .s-label.active {
   background: #eee;

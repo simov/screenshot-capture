@@ -45,6 +45,18 @@ var events = {
     state.dpr.forEach((item) => item.checked = false)
     item.checked = true
     chrome.storage.sync.set({dpr: item.id})
+  },
+  button: (action) => () => {
+    chrome.tabs.create({url: {
+      shortcut: 'chrome://extensions/shortcuts',
+      location: 'chrome://settings/downloads',
+    }[action]})
+  }
+}
+
+var oncreate = {
+  ripple: (vnode) => {
+    mdc.ripple.MDCRipple.attachTo(vnode.dom)
   }
 }
 
@@ -97,9 +109,7 @@ m.mount(document.querySelector('main'), {
     ),
 
     m('.bs-callout',
-      m('h4.mdc-typography--headline5', 'Screenshot Size',
-        m('span', 'Only for ', m('code', 'HDPI'), ' displays like Retina')
-      ),
+      m('h4.mdc-typography--headline5', 'Screenshot Size'),
       state.dpr.map((item) =>
         m('label.s-label', {onupdate: onupdate(item)},
           m('.mdc-radio',
@@ -119,27 +129,26 @@ m.mount(document.querySelector('main'), {
     ),
 
     m('.bs-callout',
-      m('h4.mdc-typography--headline5', 'Keyboard Shortcut',
-        state.shortcut &&
-        m('span', 'Press ', m('code', state.shortcut), ' to capture screenshot'),
-        !state.shortcut &&
-        m('span', 'Currently there is no keyboard shortcut set')
-      ),
-      m('p',
-        '1. Navigate to ',
-        m('code', 'chrome://extensions')
-      ),
-      m('p',
-        '2. Click on the menu icon ',
-        m('span.icon-menu'),
-        ' in the top left corner and choose ',
-        m('code', 'Keyboard shortcuts'),
-        ' from the menu'
-      ),
-      m('p',
-        '3. Find Screenshot Capture and set key combination for the ',
-        m('code', 'Take Screenshot'),
-        ' action'
+      m('h4.mdc-typography--headline5', 'Keyboard Shortcut'),
+      state.shortcut &&
+      m('p', 'Current keyboard shortcut ', m('code', state.shortcut)),
+      !state.shortcut &&
+      m('p', 'No keyboard shortcut set'),
+      m('button.mdc-button mdc-button--raised s-button', {
+        oncreate: oncreate.ripple,
+        onclick: events.button('shortcut')
+        },
+        'Update'
+      )
+    ),
+
+    m('.bs-callout',
+      m('h4.mdc-typography--headline5', 'Save Location'),
+      m('button.mdc-button mdc-button--raised s-button', {
+        oncreate: oncreate.ripple,
+        onclick: events.button('location')
+        },
+        'Update'
       )
     )
   ]
