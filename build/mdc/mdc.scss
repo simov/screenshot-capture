@@ -3,6 +3,7 @@ $mdc-theme-primary: #607d8b;
 $mdc-theme-secondary: #607d8b;
 $mdc-theme-background: #fff;
 
+@import "@material/button/mdc-button";
 @import "@material/elevation/mdc-elevation";
 @import "@material/radio/mdc-radio";
 @import "@material/theme/mdc-theme";

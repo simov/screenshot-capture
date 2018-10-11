@@ -12,6 +12,7 @@
     "url": "https://github.com/simov/screenshot-capture.git"
   },
   "dependencies": {
+    "@material/button": "^0.40.1",
     "@material/elevation": "^0.40.1",
     "@material/radio": "^0.40.1",
     "@material/theme": "^0.40.1",
