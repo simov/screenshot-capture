@@ -11,9 +11,9 @@
 - Crop and Save (automatic save)
 - Crop and Wait (manual save)
 - Configurable Keyboard Shortcut
+- Save screenshots in PNG or JPG file format
 - Preserve or downscale screenshot size on HDPI displays like Retina
 - Unique screenshot date/time file name
-- Save screenshots in PNG file format
 - No special permissions required
 - Open Source
 
@@ -23,11 +23,27 @@
 1. Click on the extension button using your **Right** Mouse Button
 2. Select `Options` from the context menu
 
-> Alternatively:
 
-1. Navigate to `chrome://extensions` and find the Screenshot Capture extension
-2. Click on the `Details` button
-3. Find the `Extension options` link and click on it
+# Capture Method
+
+- **`Capture Viewport`** - activate the extension (either using the toolbar button or the [keyboard shortcut](#keyboard-shortcut)) to capture the visible part of the screen. You will be either prompted to save the screenshot or the screenshot will be saved automatically (depending on your [download preferences](#save-location))
+
+- **`Crop and Save`** - activate the extension (either using the toolbar button or the [keyboard shortcut](#keyboard-shortcut)) then hold down your left mouse button somewhere on the page and drag your mouse in any direction. When you release the mouse button the selected area will be cropped and you will be either prompted to save the screenshot or the screenshot will be saved automatically (depending on your [download preferences](#save-location))
+
+- **`Crop and Wait`** - activate the extension (either using the toolbar button or the [keyboard shortcut](#keyboard-shortcut)) then hold down your left mouse button somewhere on the page and drag your mouse in any direction. When you are ready - activate the extension again (either through the toolbar button or the keyboard shortcut) to crop the selected area. You will be either prompted to save the screenshot or the screenshot will be saved automatically (depending on your [download preferences](#save-location))
+
+
+# Image Format
+
+- **`PNG`** - better image quality but larger file size. Best suited for cropping and capturing simple web pages
+- **`JPG`** - smaller file size but a bit worse image quality. Useful when taking fullscreen screenshots of images and videos
+
+
+# Screenshot Size
+
+- **`Preserver original DPI size`** - the screenshot will be saved with the actual page size that you are seeing on screen
+
+- **`Adjust to actual size`** - on HDPI displays like Retina or zoomed in pages, the screenshot will be downscaled to the original page size
 
 
 # Keyboard Shortcut
@@ -42,21 +58,16 @@
 1. Navigate to `chrome://settings`
 2. Click on the menu icon in the top left corner and expand the `Advanced` section in the sidebar menu
 3. Click on `Downloads`
-4. Change the default save `Location`
-5. Use the `Ask where to save ...` switch to toggle the autosaving
+4. Change the default download `Location`
+5. Use the `Ask where to save each file before downloading` switch to toggle the **autosaving**
 
 
-# Page Zoom
-
-In case you have some pages zoomed in, you can enable the `Adjust to actual size` option from the options page to downscale the screenshot to the original size
-
-
-# Misc
+# Origins
 
 Note that the extension won't work on certain origins:
 
-- chrome-extension://...
-- https://chrome.google.com/webstore/category/extensions
+- chrome origins like: `chrome://...` and `chrome-extension://...`
+- the official chrome web store: `https://chrome.google.com/webstore/category/extensions`
 
 
 # License
