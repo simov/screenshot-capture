@@ -8,6 +8,9 @@ chrome.storage.sync.get((config) => {
   if (!config.format) {
     chrome.storage.sync.set({format: 'png'})
   }
+  if (!config.save) {
+	    chrome.storage.sync.set({save: 'file'})
+  }
   if (config.dpr === undefined) {
     chrome.storage.sync.set({dpr: true})
   }

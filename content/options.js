@@ -9,7 +9,11 @@ var state = {
   ],
   format: [
     {id: 'png', title: 'PNG'},
-    {id: 'jpeg', title: 'JPG'},
+    {id: 'jpeg', title: 'JPG'}
+  ],
+  save: [
+	  {id: 'file', title: 'To File'},
+	  {id: 'clipboard', title: 'To Clipboard (Base64)'}
   ],
   dpr: [
     {id: true, title: 'Preserve original DPI size'},
@@ -20,6 +24,7 @@ var state = {
 chrome.storage.sync.get((config) => {
   state.method.forEach((item) => item.checked = item.id === config.method)
   state.format.forEach((item) => item.checked = item.id === config.format)
+  state.save.forEach((item) => item.checked = item.id === config.save)
   state.dpr.forEach((item) => item.checked = item.id === config.dpr)
   m.redraw()
 })
@@ -87,6 +92,26 @@ m.mount(document.querySelector('main'), {
               type: 'radio', name: 'format',
               checked: item.checked && 'checked',
               onchange: events.option('format', item)
+            }),
+            m('.mdc-radio__background',
+              m('.mdc-radio__outer-circle'),
+              m('.mdc-radio__inner-circle'),
+            ),
+          ),
+          m('span', item.title)
+        )
+      )
+    ),
+    
+    m('.bs-callout',
+      m('h4.mdc-typography--headline5', 'Save Format'),
+      state.save.map((item) =>
+        m('label.s-label', {onupdate: onupdate(item)},
+          m('.mdc-radio',
+            m('input.mdc-radio__native-control', {
+              type: 'radio', name: 'save',
+              checked: item.checked && 'checked',
+              onchange: events.option('save', item)
             }),
             m('.mdc-radio__background',
               m('.mdc-radio__outer-circle'),

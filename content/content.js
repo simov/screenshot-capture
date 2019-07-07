@@ -60,7 +60,7 @@ var capture = (force) => {
         }, (res) => {
           overlay(false)
           selection = null
-          save(res.image, config.format)
+          save(res.image, config.format, config.save)
         })
       }, 50)
     }
@@ -70,7 +70,7 @@ var capture = (force) => {
         area: {x: 0, y: 0, w: innerWidth, h: innerHeight}, dpr: devicePixelRatio
       }, (res) => {
         overlay(false)
-        save(res.image, config.format)
+        save(res.image, config.format, config.save)
       })
     }
   })
@@ -86,11 +86,21 @@ var filename = (format) => {
   return `Screenshot Capture - ${timestamp(new Date())}.${ext(format)}`
 }
 
-var save = (image, format) => {
-  var link = document.createElement('a')
-  link.download = filename(format)
-  link.href = image
-  link.click()
+var save = (image, format, save) => {
+  if (save === 'file') {
+	  var link = document.createElement('a')
+	  link.download = filename(format)
+	  link.href = image
+	  link.click()
+  } else if (save === 'clipboard') {
+	  navigator.clipboard.writeText(image)
+	  	.then(() => {
+	  		alert('Image [' + format + '] in Base64 saved to Clipboard\nStarting chars: ' + image.substring(0, 40) + "...")
+		  })
+	  .catch(err => {
+	    console.error('Could not copy text: ', err);
+	  });
+  }
 }
 
 window.addEventListener('resize', ((timeout) => () => {
