@@ -12,8 +12,8 @@ var state = {
     {id: 'jpeg', title: 'JPG'}
   ],
   save: [
-	  {id: 'file', title: 'To File'},
-	  {id: 'clipboard', title: 'To Clipboard (Base64)'}
+    {id: 'file', title: 'To File'},
+    {id: 'clipboard', title: 'To Clipboard (Base64)'}
   ],
   dpr: [
     {id: true, title: 'Preserve original DPI size'},
@@ -102,7 +102,7 @@ m.mount(document.querySelector('main'), {
         )
       )
     ),
-    
+
     m('.bs-callout',
       m('h4.mdc-typography--headline5', 'Save Format'),
       state.save.map((item) =>
