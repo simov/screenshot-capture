@@ -12,6 +12,7 @@
 - Crop and Wait (manual save)
 - Configurable Keyboard Shortcut
 - Save screenshots in PNG or JPG file format
+- Save screenshots to file or copy to clipboard as Base64
 - Preserve or downscale screenshot size on HDPI displays like Retina
 - Unique screenshot date/time file name
 - No special permissions required
@@ -39,10 +40,15 @@
 - **`JPG`** - smaller file size but a bit worse image quality. Useful when taking fullscreen screenshots of images and videos
 
 
+# Save Format
+
+- **`To File`** - you will be either prompted to save the screenshot or the screenshot will be saved automatically (depending on your [download preferences](#save-location))
+- **`To Clipboard (Base64)`** - the screenshot will be copied to the clipboard as Base64 encoded string
+
+
 # Screenshot Size
 
 - **`Preserver original DPI size`** - the screenshot will be saved with the actual page size that you are seeing on screen
-
 - **`Adjust to actual size`** - on HDPI displays like Retina or zoomed in pages, the screenshot will be downscaled to the original page size
 
 
