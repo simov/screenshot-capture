@@ -97,7 +97,26 @@ var save = (image, format, save) => {
     navigator.clipboard.writeText(image).then(() => {
       alert([
         'Screenshot Capture:',
-        `${image.substring(0, 40)}...`,
+        'Data URL String',
+        'Saved to Clipboard!'
+      ].join('\n'))
+    })
+  }
+  else if (save === 'binary') {
+    var [header, base64] = image.split(',')
+    var [_, type] = /data:(.*);base64/.exec(header)
+    var binary = atob(base64)
+    var array = Array.from({length: binary.length})
+      .map((_, index) => binary.charCodeAt(index))
+    navigator.clipboard.write([
+      new ClipboardItem({
+        // jpeg is not supported on write, though the encoding is preserved
+        'image/png': new Blob([new Uint8Array(array)], {type: 'image/png'})
+      })
+    ]).then(() => {
+      alert([
+        'Screenshot Capture:',
+        'Binary Image',
         'Saved to Clipboard!'
       ].join('\n'))
     })
