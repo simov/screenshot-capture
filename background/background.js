@@ -14,6 +14,11 @@ chrome.storage.sync.get((config) => {
   if (config.dpr === undefined) {
     chrome.storage.sync.set({dpr: true})
   }
+  // v1.9 -> v2.0
+  if (config.save === 'clipboard') {
+    config.save = 'url'
+    chrome.storage.sync.set({save: 'url'})
+  }
 })
 
 function inject (tab) {

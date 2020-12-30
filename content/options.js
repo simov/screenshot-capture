@@ -13,7 +13,7 @@ var state = {
   ],
   save: [
     {id: 'file', title: 'To File'},
-    {id: 'clipboard', title: 'To Clipboard (Base64)'}
+    {id: 'url', title: 'To Clipboard (Data URL String)'}
   ],
   dpr: [
     {id: true, title: 'Preserve original DPI size'},

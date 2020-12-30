@@ -93,7 +93,7 @@ var save = (image, format, save) => {
     link.href = image
     link.click()
   }
-  else if (save === 'clipboard') {
+  else if (save === 'url') {
     navigator.clipboard.writeText(image).then(() => {
       alert([
         'Screenshot Capture:',
