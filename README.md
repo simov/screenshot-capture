@@ -2,7 +2,7 @@
 # Screenshot Capture / Browser Extension
 
 
-**Install: [Chrome]** / **Donate: [PayPal]**
+**Install: [Chrome]**
 
 
 # Features
@@ -11,8 +11,9 @@
 - Crop and Save (automatic save)
 - Crop and Wait (manual save)
 - Configurable Keyboard Shortcut
-- Save screenshots in PNG or JPG file format
-- Save screenshots to file or copy to clipboard as Base64
+- Save screenshot as PNG or JPG file format
+- Save screenshot as file
+- Copy screenshot to clipboard as Data URL String or Binary Image
 - Preserve or downscale screenshot size on HDPI displays like Retina
 - Unique screenshot date/time file name
 - No special permissions required
@@ -37,35 +38,33 @@
 # Image Format
 
 - **`PNG`** - better image quality but larger file size. Best suited for cropping and capturing simple web pages
-- **`JPG`** - smaller file size but a bit worse image quality. Useful when taking fullscreen screenshots of images and videos
+- **`JPG`** - smaller file size with slightly worse image quality. Useful when taking fullscreen screenshots of images and videos
 
 
 # Save Format
 
 - **`To File`** - you will be either prompted to save the screenshot or the screenshot will be saved automatically (depending on your [download preferences](#save-location))
-- **`To Clipboard (Base64)`** - the screenshot will be copied to the clipboard as Base64 encoded string
+- **`To Clipboard (Data URL String)`** - the screenshot will be copied to the clipboard as Data URL String
+- **`To Clipboard (Binary Image)`** - the screenshot will be copied to the clipboard as raw Binary Image
 
 
 # Screenshot Size
 
-- **`Preserver original DPI size`** - the screenshot will be saved with the actual page size that you are seeing on screen
+- **`Preserve original DPI size`** - the screenshot will be saved with the actual page size that you are seeing on screen
 - **`Adjust to actual size`** - on HDPI displays like Retina or zoomed in pages, the screenshot will be downscaled to the original page size
 
 
 # Keyboard Shortcut
 
-1. Navigate to `chrome://extensions`
-2. Click on the menu icon in the top left corner and choose `Keyboard shortcuts` from the menu
-3. Find Screenshot Capture and set key combination for the `Take Screenshot` action
+1. Navigate to `chrome://extensions/shortcuts`
+2. Find Screenshot Capture and set key combination for the `Take Screenshot` action
 
 
 # Save Location
 
-1. Navigate to `chrome://settings`
-2. Click on the menu icon in the top left corner and expand the `Advanced` section in the sidebar menu
-3. Click on `Downloads`
-4. Change the default download `Location`
-5. Use the `Ask where to save each file before downloading` switch to toggle the **autosaving**
+1. Navigate to `chrome://settings/downloads`
+2. Change the default download `Location`
+3. Use the `Ask where to save each file before downloading` switch to toggle the **autosaving**
 
 
 # Origins
