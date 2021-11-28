@@ -60,7 +60,9 @@ var capture = (force) => {
         }, (res) => {
           overlay(false)
           selection = null
-          save(res.image, config.format, config.save)
+          crop(...res.args, (image) => {
+            save(image, config.format, config.save)
+          })
         })
       }, 50)
     }
@@ -70,7 +72,14 @@ var capture = (force) => {
         area: {x: 0, y: 0, w: innerWidth, h: innerHeight}, dpr: devicePixelRatio
       }, (res) => {
         overlay(false)
-        save(res.image, config.format, config.save)
+        if (res.args) {
+          crop(...res.args, (image) => {
+            save(image, config.format, config.save)
+          })
+        }
+        else if (res.image) {
+          save(res.image, config.format, config.save)
+        }
       })
     }
   })

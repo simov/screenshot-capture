@@ -1,10 +1,10 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name"            : "Screenshot Capture",
   "version"         : "2.0",
   "description"     : "Screenshot Capture",
 
-  "browser_action": {
+  "action": {
     "default_icon": {
       "19" : "/images/icon19.png",
       "38" : "/images/icon38.png"
@@ -15,15 +15,17 @@
   "options_page": "/content/options.html",
 
   "background" : {
-    "scripts": [
-      "background/background.js"
-    ],
-    "persistent": false
+    "service_worker": "background/background.js"
   },
 
   "web_accessible_resources": [
-    "/images/Jcrop.gif",
-    "/images/pixel.png"
+    {
+      "resources": [
+        "/images/Jcrop.gif",
+        "/images/pixel.png"
+      ],
+      "matches": ["*://*/*"]
+    }
   ],
 
   "commands": {
@@ -45,6 +47,7 @@
 
   "permissions": [
     "storage",
+    "scripting",
     "activeTab"
   ]
 }
