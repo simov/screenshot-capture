@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name"            : "Screenshot Capture",
-  "version"         : "2.0",
+  "version"         : "3.0",
   "description"     : "Screenshot Capture",
 
   "action": {
@@ -20,11 +20,13 @@
 
   "web_accessible_resources": [
     {
+      "matches": [
+        "<all_urls>"
+      ],
       "resources": [
         "/images/Jcrop.gif",
         "/images/pixel.png"
-      ],
-      "matches": ["*://*/*"]
+      ]
     }
   ],
 
