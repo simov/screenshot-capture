@@ -6,16 +6,16 @@
 
   "action": {
     "default_icon": {
-      "19" : "/images/icon19.png",
-      "38" : "/images/icon38.png"
+      "19" : "/icons/icon19.png",
+      "38" : "/icons/icon38.png"
     },
     "default_title": "Screenshot Capture"
   },
 
-  "options_page": "/content/options.html",
+  "options_page": "/options/index.html",
 
   "background" : {
-    "service_worker": "background/background.js"
+    "service_worker": "background/index.js"
   },
 
   "web_accessible_resources": [
@@ -24,25 +24,25 @@
         "<all_urls>"
       ],
       "resources": [
-        "/images/Jcrop.gif",
-        "/images/pixel.png"
+        "/vendor/Jcrop.gif",
+        "/content/pixel.png"
       ]
     }
   ],
 
   "commands": {
     "take-screenshot": {
+      "description": "Take Screenshot",
       "suggested_key": {
         "default": "Alt+S"
-      },
-      "description": "Take Screenshot"
+      }
     }
   },
 
   "icons": {
-    "16"  : "images/icon16.png",
-    "48"  : "images/icon48.png",
-    "128" : "images/icon128.png"
+    "16"  : "icons/icon16.png",
+    "48"  : "icons/icon48.png",
+    "128" : "icons/icon128.png"
   },
 
   "homepage_url": "https://chrome.google.com/webstore/detail/screenshot-capture/giabbpobpebjfegnpcclkocepcgockkc",

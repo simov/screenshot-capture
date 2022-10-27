@@ -30,12 +30,12 @@ function inject (tab) {
 
   var timeout = setTimeout(() => {
     chrome.scripting.insertCSS({files: ['vendor/jquery.Jcrop.min.css'], target: {tabId: tab.id}})
-    chrome.scripting.insertCSS({files: ['css/content.css'], target: {tabId: tab.id}})
+    chrome.scripting.insertCSS({files: ['content/index.css'], target: {tabId: tab.id}})
 
     chrome.scripting.executeScript({files: ['vendor/jquery.min.js'], target: {tabId: tab.id}})
     chrome.scripting.executeScript({files: ['vendor/jquery.Jcrop.min.js'], target: {tabId: tab.id}})
     chrome.scripting.executeScript({files: ['content/crop.js'], target: {tabId: tab.id}})
-    chrome.scripting.executeScript({files: ['content/content.js'], target: {tabId: tab.id}})
+    chrome.scripting.executeScript({files: ['content/index.js'], target: {tabId: tab.id}})
 
     setTimeout(() => {
       chrome.tabs.sendMessage(tab.id, {message: 'init'})

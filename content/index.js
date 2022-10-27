@@ -10,7 +10,7 @@ var overlay = ((active) => (state) => {
 var image = (done) => {
   var image = new Image()
   image.id = 'fake-image'
-  image.src = chrome.runtime.getURL('/images/pixel.png')
+  image.src = chrome.runtime.getURL('/content/pixel.png')
   image.onload = () => {
     $('body').append(image)
     done()
@@ -36,7 +36,7 @@ var init = (done) => {
     jcrop = this
 
     $('.jcrop-hline, .jcrop-vline').css({
-      backgroundImage: `url(${chrome.runtime.getURL('/images/Jcrop.gif')})`
+      backgroundImage: `url(${chrome.runtime.getURL('/vendor/Jcrop.gif')})`
     })
 
     if (selection) {
