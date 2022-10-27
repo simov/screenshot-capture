@@ -2,3 +2,6 @@ npm-debug.log
 coverage/
 node_modules/
 package-lock.json
+
+vendor/
+*.zip

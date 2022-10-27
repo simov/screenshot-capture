@@ -1,0 +1,26 @@
+{
+  "name": "screenshot-capture",
+  "version": "0.0.0",
+  "description": "Screenshot Capture / Browser Extension",
+  "private": true,
+  "dependencies": {
+    "@material/button": "^0.40.1",
+    "@material/elevation": "^0.40.1",
+    "@material/radio": "^0.40.1",
+    "@material/theme": "^0.40.1",
+    "@material/toolbar": "^0.40.1",
+    "@material/typography": "^0.40.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "csso-cli": "^2.0.2",
+    "node-sass": "^5.0.0",
+    "rollup": "^2.35.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
