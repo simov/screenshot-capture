@@ -49,7 +49,7 @@ chrome.action.onClicked.addListener((tab) => {
 
 chrome.commands.onCommand.addListener((command) => {
   if (command === 'take-screenshot') {
-    chrome.tabs.query({active: true}, (tab) => {
+    chrome.tabs.query({active: true, currentWindow: true}, (tab) => {
       inject(tab[0])
     })
   }
@@ -59,7 +59,7 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
   if (req.message === 'capture') {
     chrome.storage.sync.get((config) => {
 
-      chrome.tabs.query({active: true}, (tab) => {
+      chrome.tabs.query({active: true, currentWindow: true}, (tab) => {
 
         chrome.tabs.captureVisibleTab(tab.windowId, {format: config.format}, (image) => {
           // image is base64
