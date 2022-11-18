@@ -19,6 +19,10 @@ var state = {
   dpr: [
     {id: true, title: 'Preserve original DPI size'},
     {id: false, title: 'Adjust to actual size'}
+  ],
+  icon: [
+    {id: false, title: 'Dark Icon'},
+    {id: true, title: 'Light Icon'}
   ]
 }
 
@@ -27,6 +31,7 @@ chrome.storage.sync.get((config) => {
   state.format.forEach((item) => item.checked = item.id === config.format)
   state.save.forEach((item) => item.checked = item.id === config.save)
   state.dpr.forEach((item) => item.checked = item.id === config.dpr)
+  state.icon.forEach((item) => item.checked = item.id === config.icon)
   m.redraw()
 })
 
@@ -41,6 +46,30 @@ var events = {
     state[name].forEach((item) => item.checked = false)
     item.checked = true
     chrome.storage.sync.set({[name]: item.id})
+    if (name === 'icon') {
+      if (item.id) {
+        chrome.action.setIcon({
+          path: {
+            '16' : '/icons/icon16-light.png',
+            '19' : '/icons/icon19-light.png',
+            '38' : '/icons/icon38-light.png',
+            '48' : '/icons/icon48-light.png',
+            '128' : '/icons/icon128-light.png'
+          }
+        })
+      }
+      else {
+        chrome.action.setIcon({
+          path: {
+            '16' : '/icons/icon16.png',
+            '19' : '/icons/icon19.png',
+            '38' : '/icons/icon38.png',
+            '48' : '/icons/icon48.png',
+            '128' : '/icons/icon128.png'
+          }
+        })
+      }
+    }
   },
   button: (action) => () => {
     chrome.tabs.create({url: {
@@ -166,6 +195,26 @@ m.mount(document.querySelector('main'), {
         },
         'Update'
       )
-    )
+    ),
+
+    m('.bs-callout',
+      m('h4.mdc-typography--headline5', 'Extension Icon'),
+      state.icon.map((item) =>
+        m('label.s-label', {onupdate: onupdate(item)},
+          m('.mdc-radio',
+            m('input.mdc-radio__native-control', {
+              type: 'radio', name: 'icon',
+              checked: item.checked && 'checked',
+              onchange: events.option('icon', item)
+            }),
+            m('.mdc-radio__background',
+              m('.mdc-radio__outer-circle'),
+              m('.mdc-radio__inner-circle'),
+            ),
+          ),
+          m('span', item.title)
+        )
+      )
+    ),
   ]
 })
