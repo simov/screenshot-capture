@@ -4,19 +4,32 @@
   "version"         : "3.0",
   "description"     : "Screenshot Capture",
 
+  "homepage_url": "https://chrome.google.com/webstore/detail/screenshot-capture/giabbpobpebjfegnpcclkocepcgockkc",
+
+  "icons": {
+    "16" : "/icons/dark/16x16.png",
+    "19" : "/icons/dark/19x19.png",
+    "38" : "/icons/dark/38x38.png",
+    "48" : "/icons/dark/48x48.png",
+    "128": "/icons/dark/128x128.png"
+  },
+
   "action": {
     "default_icon": {
-      "19" : "/icons/icon19.png",
-      "38" : "/icons/icon38.png"
+      "16" : "/icons/dark/16x16.png",
+      "19" : "/icons/dark/19x19.png",
+      "38" : "/icons/dark/38x38.png",
+      "48" : "/icons/dark/48x48.png",
+      "128" : "/icons/dark/128x128.png"
     },
     "default_title": "Screenshot Capture"
   },
 
-  "options_page": "/options/index.html",
-
   "background" : {
     "service_worker": "background/index.js"
   },
+
+  "options_page": "/options/index.html",
 
   "web_accessible_resources": [
     {
@@ -38,14 +51,6 @@
       }
     }
   },
-
-  "icons": {
-    "16"  : "icons/icon16.png",
-    "48"  : "icons/icon48.png",
-    "128" : "icons/icon128.png"
-  },
-
-  "homepage_url": "https://chrome.google.com/webstore/detail/screenshot-capture/giabbpobpebjfegnpcclkocepcgockkc",
 
   "permissions": [
     "storage",
