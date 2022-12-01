@@ -1,12 +1,11 @@
 
 # Screenshot Capture / Browser Extension
 
-
-**Install: [Chrome]**
-
+**Install: [Chrome]** / **[Opera]**  / **[Brave]** / **[Chromium]** / **[Vivaldi]**
 
 # Features
 
+- Secure by design
 - Capture Viewport
 - Crop and Save (automatic save)
 - Crop and Wait (manual save)
@@ -17,48 +16,51 @@
 - Preserve or downscale screenshot size on HDPI displays like Retina
 - Unique screenshot date/time file name
 - No special permissions required
-- Open Source
-
+- Free and Open Source
 
 # Options
 
 1. Click on the extension button using your **Right** Mouse Button
 2. Select `Options` from the context menu
 
+# Table of Contents
+
+- **[Capture Method](#capture-method)**
+- **[Image Format](#image-format)**
+- **[Save Format](#save-format)**
+- **[Screenshot Size](#screenshot-size)**
+- **[Keyboard Shortcut](#keyboard-shortcut)**
+- **[Save Location](#save-location)**
+- **[Origins](#origins)**
 
 # Capture Method
 
-- **`Capture Viewport`** - activate the extension (either using the toolbar button or the [keyboard shortcut](#keyboard-shortcut)) to capture the visible part of the screen. You will be either prompted to save the screenshot or the screenshot will be saved automatically (depending on your [download preferences](#save-location))
+- **`Capture Viewport`** - activate the extension (either by using the toolbar button or the [keyboard shortcut](#keyboard-shortcut)) to capture the visible portion of the screen. You will be prompted where to save the screenshot or the screenshot will be saved automatically (depending on your [download preferences](#save-location))
 
-- **`Crop and Save`** - activate the extension (either using the toolbar button or the [keyboard shortcut](#keyboard-shortcut)) then hold down your left mouse button somewhere on the page and drag your mouse in any direction. When you release the mouse button the selected area will be cropped and you will be either prompted to save the screenshot or the screenshot will be saved automatically (depending on your [download preferences](#save-location))
+- **`Crop and Save`** - activate the extension (either by using the toolbar button or the [keyboard shortcut](#keyboard-shortcut)) then hold down your left mouse button somewhere on the page and drag your mouse in any direction. When you release the mouse button the selected area will be cropped and you will be prompted where to save the screenshot or the screenshot will be saved automatically (depending on your [download preferences](#save-location))
 
-- **`Crop and Wait`** - activate the extension (either using the toolbar button or the [keyboard shortcut](#keyboard-shortcut)) then hold down your left mouse button somewhere on the page and drag your mouse in any direction. When you are ready - activate the extension again (either through the toolbar button or the keyboard shortcut) to crop the selected area. You will be either prompted to save the screenshot or the screenshot will be saved automatically (depending on your [download preferences](#save-location))
-
+- **`Crop and Wait`** - activate the extension (either by using the toolbar button or the [keyboard shortcut](#keyboard-shortcut)) then hold down your left mouse button somewhere on the page and drag your mouse in any direction. When you are ready - activate the extension again (either by using the toolbar button or the keyboard shortcut) to crop the selected area. You will be prompted where to save the screenshot or the screenshot will be saved automatically (depending on your [download preferences](#save-location))
 
 # Image Format
 
 - **`PNG`** - better image quality but larger file size. Best suited for cropping and capturing simple web pages
 - **`JPG`** - smaller file size with slightly worse image quality. Useful when taking fullscreen screenshots of images and videos
 
-
 # Save Format
 
-- **`To File`** - you will be either prompted to save the screenshot or the screenshot will be saved automatically (depending on your [download preferences](#save-location))
+- **`To File`** - save the screenshot to a file, you will be prompted where to save the screenshot or the screenshot will be saved automatically (depending on your [download preferences](#save-location))
 - **`To Clipboard (Data URL String)`** - the screenshot will be copied to the clipboard as Data URL String
 - **`To Clipboard (Binary Image)`** - the screenshot will be copied to the clipboard as raw Binary Image
-
 
 # Screenshot Size
 
 - **`Preserve original DPI size`** - the screenshot will be saved with the actual page size that you are seeing on screen
 - **`Adjust to actual size`** - on HDPI displays like Retina or zoomed in pages, the screenshot will be downscaled to the original page size
 
-
 # Keyboard Shortcut
 
 1. Navigate to `chrome://extensions/shortcuts`
 2. Find Screenshot Capture and set key combination for the `Take Screenshot` action
-
 
 # Save Location
 
@@ -66,14 +68,49 @@
 2. Change the default download `Location`
 3. Use the `Ask where to save each file before downloading` switch to toggle the **autosaving**
 
-
 # Origins
 
 Note that the extension won't work on certain origins:
 
-- chrome origins like: `chrome://...` and `chrome-extension://...`
+- chrome origins like: `chrome://` and `chrome-extension://`
 - the official chrome web store: `https://chrome.google.com/webstore/category/extensions`
 
+# Manual Install
+
+The following instructions applies for: Chrome, Edge, Opera, Brave, Chromium and Vivaldi.
+
+Note that in any of the following cases you won't receive any future updates automatically!
+
+## Load packed .crx
+
+1. Go to [releases] and pick a release that you want to install
+2. Download the markdown-viewer.crx file
+3. Navigate to `chrome://extensions`
+4. Make sure that the `Developer mode` switch is enabled
+5. Drag and drop the markdown-viewer.crx file into the chrome://extensions page
+
+## Load unpacked .zip
+
+1. Go to [releases] and pick a release that you want to install
+2. Download the markdown-viewer.zip file and extract it
+3. Navigate to `chrome://extensions`
+4. Make sure that the `Developer mode` switch is enabled
+5. Click on the `Load unpacked` button and select the extracted directory
+
+## Build
+
+1. Clone this repository
+2. Execute `sh build/package.sh chrome`
+3. Navigate to `chrome://extensions`
+4. Make sure that the `Developer mode` switch is enabled
+5. Click on the `Load unpacked` button and select the cloned directory
+
+## Manifest v2
+
+1. Clone the [mv2] branch (Screenshot Capture v2.0)
+2. Navigate to `chrome://extensions`
+3. Make sure that the `Developer mode` switch is enabled
+4. Click on the `Load unpacked` button and select the cloned directory
 
 # License
 
@@ -101,4 +138,12 @@ SOFTWARE.
 
 
   [chrome]: https://chrome.google.com/webstore/detail/screenshot-capture/giabbpobpebjfegnpcclkocepcgockkc
-  [paypal]: https://www.paypal.me/simeonvelichkov
+  [firefox]: ...
+  [edge]: ...
+  [opera]: https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk
+  [brave]: https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk
+  [chromium]: https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk
+  [vivaldi]: https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk
+
+  [releases]: https://github.com/simov/screenshot-capture/releases
+  [mv2]: https://github.com/simov/screenshot-capture/tree/mv2
