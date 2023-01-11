@@ -1,7 +1,7 @@
 
 # Screenshot Capture / Browser Extension
 
-**Install: [Chrome]** / **[Opera]**  / **[Brave]** / **[Chromium]** / **[Vivaldi]**
+**Install: [Chrome]** / **[Edge]** / **[Opera]**  / **[Brave]** / **[Chromium]** / **[Vivaldi]**
 
 # Features
 
@@ -138,8 +138,7 @@ SOFTWARE.
 
 
   [chrome]: https://chrome.google.com/webstore/detail/screenshot-capture/giabbpobpebjfegnpcclkocepcgockkc
-  [firefox]: ...
-  [edge]: ...
+  [edge]: https://microsoftedge.microsoft.com/addons/detail/screenshot-capture/fjmanmejbodljeaicnkgdgibdbeheela
   [opera]: https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk
   [brave]: https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk
   [chromium]: https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk
