@@ -8,11 +8,17 @@ chrome.storage.sync.get((config) => {
   if (!config.format) {
     chrome.storage.sync.set({format: 'png'})
   }
+  if (!config.quality) {
+    chrome.storage.sync.set({quality: 100})
+  }
   if (!config.save) {
     chrome.storage.sync.set({save: 'file'})
   }
   if (config.dpr === undefined) {
     chrome.storage.sync.set({dpr: true})
+  }
+  if (config.delay === undefined) {
+    chrome.storage.sync.set({delay: 500})
   }
   // v1.9 -> v2.0
   if (config.save === 'clipboard') {
@@ -70,46 +76,31 @@ chrome.commands.onCommand.addListener((command) => {
 
 chrome.runtime.onMessage.addListener((req, sender, res) => {
   if (req.message === 'capture') {
-    chrome.storage.sync.get((config) => {
-
-      chrome.tabs.query({active: true, currentWindow: true}, (tab) => {
-
-        chrome.tabs.captureVisibleTab(tab.windowId, {format: config.format}, (image) => {
-          // image is base64
-
-          if (config.method === 'view') {
-            if (req.dpr !== 1 && !config.dpr) {
-              res({message: 'image', args: [image, req.area, req.dpr, config.dpr, config.format]})
-            }
-            else {
-              res({message: 'image', image})
-            }
-          }
-          else {
-            res({message: 'image', args: [image, req.area, req.dpr, config.dpr, config.format]})
-          }
-        })
+    chrome.tabs.query({active: true, currentWindow: true}, (tab) => {
+      chrome.tabs.captureVisibleTab(tab.windowId, {format: req.format, quality: req.quality}, (image) => {
+        // image is base64
+        res({message: 'image', image})
       })
     })
   }
   else if (req.message === 'active') {
     if (req.active) {
       chrome.storage.sync.get((config) => {
-        if (config.method === 'view') {
-          chrome.action.setTitle({tabId: sender.tab.id, title: 'Capture Viewport'})
-          chrome.action.setBadgeText({tabId: sender.tab.id, text: '⬒'})
-        }
-        // else if (config.method === 'full') {
-        //   chrome.action.setTitle({tabId: sender.tab.id, title: 'Capture Document'})
-        //   chrome.action.setBadgeText({tabId: sender.tab.id, text: '⬛'})
-        // }
-        else if (config.method === 'crop') {
+        if (config.method === 'crop') {
           chrome.action.setTitle({tabId: sender.tab.id, title: 'Crop and Save'})
           chrome.action.setBadgeText({tabId: sender.tab.id, text: '◩'})
         }
         else if (config.method === 'wait') {
           chrome.action.setTitle({tabId: sender.tab.id, title: 'Crop and Wait'})
           chrome.action.setBadgeText({tabId: sender.tab.id, text: '◪'})
+        }
+        else if (config.method === 'view') {
+          chrome.action.setTitle({tabId: sender.tab.id, title: 'Capture Viewport'})
+          chrome.action.setBadgeText({tabId: sender.tab.id, text: '⬒'})
+        }
+        else if (config.method === 'page') {
+          chrome.action.setTitle({tabId: sender.tab.id, title: 'Capture Document'})
+          chrome.action.setBadgeText({tabId: sender.tab.id, text: '◼'})
         }
       })
     }

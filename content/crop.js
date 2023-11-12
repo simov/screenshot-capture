@@ -18,18 +18,42 @@ function crop (image, area, dpr, preserve, format, done) {
   canvas.width = w
   canvas.height = h
 
-  var img = new Image()
-  img.onload = () => {
-    var context = canvas.getContext('2d')
-    context.drawImage(img,
-      left, top,
-      width, height,
-      0, 0,
-      w, h
-    )
-
-    var cropped = canvas.toDataURL(`image/${format}`)
-    done(cropped)
+  if (image instanceof Array) {
+    ;(function loop (index, done) {
+      if (image.length === index) {
+        done()
+        return
+      }
+      var img = new Image()
+      img.onload = () => {
+        var context = canvas.getContext('2d')
+        context.drawImage(img,
+          left, top,
+          width, height,
+          0, image[index].offset,
+          w, h
+        )
+        loop(++index, done)
+      }
+      img.src = image[index].image
+    })(0, () => {
+      var cropped = canvas.toDataURL(`image/${format}`)
+      done(cropped)
+    })
   }
-  img.src = image
+  else {
+    var img = new Image()
+    img.onload = () => {
+      var context = canvas.getContext('2d')
+      context.drawImage(img,
+        left, top,
+        width, height,
+        0, 0,
+        w, h
+      )
+      var cropped = canvas.toDataURL(`image/${format}`)
+      done(cropped)
+    }
+    img.src = image
+  }
 }
