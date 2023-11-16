@@ -2,17 +2,20 @@
 // chrome.storage.sync.clear()
 
 chrome.storage.sync.get((config) => {
-  if (!config.method) {
+  if (config.method === undefined) {
     chrome.storage.sync.set({method: 'crop'})
   }
-  if (!config.format) {
+  if (config.format === undefined) {
     chrome.storage.sync.set({format: 'png'})
   }
-  if (!config.quality) {
+  if (config.quality === undefined) {
     chrome.storage.sync.set({quality: 100})
   }
-  if (!config.save) {
-    chrome.storage.sync.set({save: 'file'})
+  if (config.save === undefined) {
+    chrome.storage.sync.set({save: ['file']})
+  }
+  if (config.clipboard === undefined) {
+    chrome.storage.sync.set({clipboard: 'url'})
   }
   if (config.dpr === undefined) {
     chrome.storage.sync.set({dpr: true})
@@ -20,21 +23,27 @@ chrome.storage.sync.get((config) => {
   if (config.delay === undefined) {
     chrome.storage.sync.set({delay: 500})
   }
-  // v1.9 -> v2.0
-  if (config.save === 'clipboard') {
-    config.save = 'url'
-    chrome.storage.sync.set({save: 'url'})
+  if (config.dialog === undefined) {
+    chrome.storage.sync.set({dialog: true})
   }
-  // v2.0 -> v3.0
   if (config.icon === undefined) {
-    config.icon = false
-    chrome.storage.sync.set({icon: false})
+    chrome.storage.sync.set({icon: 'default'})
+  }
+  // v3.0 -> v3.1
+  if (typeof config.save === 'string') {
+    config.clipboard = /url|binary/.test(config.save) ? config.save : 'url'
+    config.save = /url|binary/.test(config.save) ? ['clipboard'] : ['file']
+    chrome.storage.sync.set({save: config.save})
+    chrome.storage.sync.set({clipboard: config.clipboard})
+  }
+  if (typeof config.icon === 'boolean') {
+    config.icon = config.icon === false ? 'default' : 'light'
+    chrome.storage.sync.set({icon: config.icon})
   }
 
   chrome.action.setIcon({
     path: [16, 19, 38, 48, 128].reduce((all, size) => (
-      color = config.icon ? 'light' : 'dark',
-      all[size] = `/icons/${color}/${size}x${size}.png`,
+      all[size] = `/icons/${config.icon}/${size}x${size}.png`,
       all
     ), {})
   })

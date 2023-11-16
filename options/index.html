@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Screenshot Capture</title>
+  <link href="/vendor/bootstrap-grid.min.css" rel="stylesheet" type="text/css" media="all" />
   <link href="/vendor/mdc.min.css" rel="stylesheet" type="text/css" media="all" />
-  <link href="/options/icons.css" rel="stylesheet" type="text/css" media="all" />
   <link href="/options/index.css" rel="stylesheet" type="text/css" media="all" />
   <script src="/vendor/mdc.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="/vendor/mithril.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body class="mdc-typography">
   <div id="wrapper">
-    <header class="mdc-toolbar mdc-toolbar--fixed mdc-elevation--z2">
-      <div class="mdc-toolbar__row">
-        <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-          <span class="mdc-toolbar__title">Screenshot Capture</span>
-        </section>
-        <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
-          <nav class="mdc-tab-bar">
-            <a class="mdc-tab" href="https://github.com/simov/screenshot-capture#table-of-contents">Help</a>
-          </nav>
-        </section>
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a href="https://github.com/simov/screenshot-capture" class="navbar-brand">Screenshot Capture</a>
+        <!-- <a href="#" id="menu">
+          <span>☰</span>
+          <div class="hidden">
+            <em>Help</em>
+          </div>
+        </a> -->
       </div>
-    </header>
-    <main></main>
+    </nav>
+    <div class="container">
+      <main></main>
+    </div>
     <div id="footer-push">&nbsp;</div>
   </div>
   <footer>
     <nav>
-      <a href="https://chrome.google.com/webstore/detail/screenshot-capture/giabbpobpebjfegnpcclkocepcgockkc" class="icon-chrome">Chrome Store</a>
-      <a href="https://github.com/simov/screenshot-capture" class="icon-github">GitHub</a>
+      <a href="https://github.com/simov/screenshot-capture">GitHub</a> &bullet;
+      <a href="https://chromewebstore.google.com/detail/screenshot-capture/giabbpobpebjfegnpcclkocepcgockkc">Chrome</a> &bullet;
+      <a href="https://microsoftedge.microsoft.com/addons/detail/screenshot-capture/fjmanmejbodljeaicnkgdgibdbeheela">Edge</a>
     </nav>
   </footer>
 </body>

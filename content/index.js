@@ -61,7 +61,7 @@ var capture = (force) => {
         }, (res) => {
           overlay(false)
           crop(res.image, _selection, devicePixelRatio, config.dpr, config.format, (image) => {
-            save(image, config.format, config.save)
+            save(image, config.format, config.save, config.clipboard, config.dialog)
             selection = null
           })
         })
@@ -75,11 +75,11 @@ var capture = (force) => {
         if (devicePixelRatio !== 1 && !config.dpr) {
           var area = {x: 0, y: 0, w: innerWidth, h: innerHeight}
           crop(res.image, area, devicePixelRatio, config.dpr, config.format, (image) => {
-            save(image, config.format, config.save)
+            save(image, config.format, config.save, config.clipboard, config.dialog)
           })
         }
         else {
-          save(res.image, config.format, config.save)
+          save(res.image, config.format, config.save, config.clipboard, config.dialog)
         }
       })
     }
@@ -128,7 +128,7 @@ var capture = (force) => {
           crop(images, area, devicePixelRatio, config.dpr, config.format, (image) => {
             document.querySelector('html').style.overflow = ''
             document.querySelector('body').style.overflow = ''
-            save(image, config.format, config.save)
+            save(image, config.format, config.save, config.clipboard, config.dialog)
           })
         })
       }, config.delay)
@@ -146,40 +146,46 @@ var filename = (format) => {
   return `Screenshot Capture - ${timestamp(new Date())}.${ext(format)}`
 }
 
-var save = (image, format, save) => {
-  if (save === 'file') {
+var save = (image, format, save, clipboard, dialog) => {
+  if (save.includes('file')) {
     var link = document.createElement('a')
     link.download = filename(format)
     link.href = image
     link.click()
   }
-  else if (save === 'url') {
-    navigator.clipboard.writeText(image).then(() => {
-      alert([
-        'Screenshot Capture:',
-        'Data URL String',
-        'Saved to Clipboard!'
-      ].join('\n'))
-    })
-  }
-  else if (save === 'binary') {
-    var [header, base64] = image.split(',')
-    var [_, type] = /data:(.*);base64/.exec(header)
-    var binary = atob(base64)
-    var array = Array.from({length: binary.length})
-      .map((_, index) => binary.charCodeAt(index))
-    navigator.clipboard.write([
-      new ClipboardItem({
-        // jpeg is not supported on write, though the encoding is preserved
-        'image/png': new Blob([new Uint8Array(array)], {type: 'image/png'})
+  if (save.includes('clipboard')) {
+    if (clipboard === 'url') {
+      navigator.clipboard.writeText(image).then(() => {
+        if (dialog) {
+          alert([
+            'Screenshot Capture:',
+            'Data URL String',
+            'Saved to Clipboard!'
+          ].join('\n'))
+        }
       })
-    ]).then(() => {
-      alert([
-        'Screenshot Capture:',
-        'Binary Image',
-        'Saved to Clipboard!'
-      ].join('\n'))
-    })
+    }
+    else if (clipboard === 'binary') {
+      var [header, base64] = image.split(',')
+      var [_, type] = /data:(.*);base64/.exec(header)
+      var binary = atob(base64)
+      var array = Array.from({length: binary.length})
+        .map((_, index) => binary.charCodeAt(index))
+      navigator.clipboard.write([
+        new ClipboardItem({
+          // jpeg is not supported on write, though the encoding is preserved
+          'image/png': new Blob([new Uint8Array(array)], {type: 'image/png'})
+        })
+      ]).then(() => {
+        if (dialog) {
+          alert([
+            'Screenshot Capture:',
+            'Binary Image',
+            'Saved to Clipboard!'
+          ].join('\n'))
+        }
+      })
+    }
   }
 }
 
