@@ -1,0 +1,12 @@
+{
+  "name": "screenshot-capture",
+  "version": "0.0.0",
+  "description": "Screenshot Capture / Browser Extension",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "5.2.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

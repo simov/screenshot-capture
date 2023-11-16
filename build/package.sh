@@ -16,10 +16,11 @@ cd "$(dirname "$0")"
 
 # cleanup
 rm -rf ../vendor
-rm ../screenshot-capture.zip
+rm -f ../screenshot-capture.zip
 mkdir -p ../vendor
 
 # build deps
+sh bootstrap/build.sh
 sh jquery/build.sh
 sh mdc/build.sh
 sh mithril/build.sh

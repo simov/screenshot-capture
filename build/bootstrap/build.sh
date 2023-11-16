@@ -7,7 +7,7 @@ cd "$(dirname "$0")"
 npm ci 2> /dev/null || npm i
 
 # copy
-cp node_modules/mithril/mithril.min.js ../../vendor/mithril.min.js
+cp node_modules/bootstrap/dist/css/bootstrap-grid.min.css ../../vendor/bootstrap-grid.min.css
 
 # after
 rm -rf node_modules/
