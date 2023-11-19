@@ -1,45 +1,29 @@
 
 // chrome.storage.sync.clear()
 
-chrome.storage.sync.get((config) => {
-  if (config.method === undefined) {
-    chrome.storage.sync.set({method: 'crop'})
-  }
-  if (config.format === undefined) {
-    chrome.storage.sync.set({format: 'png'})
-  }
-  if (config.quality === undefined) {
-    chrome.storage.sync.set({quality: 100})
-  }
-  if (config.save === undefined) {
-    chrome.storage.sync.set({save: ['file']})
-  }
-  if (config.clipboard === undefined) {
-    chrome.storage.sync.set({clipboard: 'url'})
-  }
-  if (config.dpr === undefined) {
-    chrome.storage.sync.set({dpr: true})
-  }
-  if (config.delay === undefined) {
-    chrome.storage.sync.set({delay: 500})
-  }
-  if (config.dialog === undefined) {
-    chrome.storage.sync.set({dialog: true})
-  }
-  if (config.icon === undefined) {
-    chrome.storage.sync.set({icon: 'default'})
-  }
+var defaults = {
+  method: 'crop',
+  format: 'png',
+  quality: 100,
+  dpr: true,
+  save: ['file'],
+  clipboard: 'url',
+  dialog: true,
+  icon: 'default',
+}
+
+chrome.storage.sync.get((store) => {
+  var config = {}
+  Object.assign(config, defaults, JSON.parse(JSON.stringify(store)))
   // v3.0 -> v3.1
   if (typeof config.save === 'string') {
     config.clipboard = /url|binary/.test(config.save) ? config.save : 'url'
     config.save = /url|binary/.test(config.save) ? ['clipboard'] : ['file']
-    chrome.storage.sync.set({save: config.save})
-    chrome.storage.sync.set({clipboard: config.clipboard})
   }
   if (typeof config.icon === 'boolean') {
     config.icon = config.icon === false ? 'default' : 'light'
-    chrome.storage.sync.set({icon: config.icon})
   }
+  chrome.storage.sync.set(config)
 
   chrome.action.setIcon({
     path: [16, 19, 38, 48, 128].reduce((all, size) => (
