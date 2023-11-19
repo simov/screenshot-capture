@@ -60,7 +60,7 @@ var capture = (force) => {
           message: 'capture', format: config.format, quality: config.quality
         }, (res) => {
           overlay(false)
-          crop(res.image, _selection, devicePixelRatio, config.dpr, config.format, (image) => {
+          crop(res.image, _selection, devicePixelRatio, config.scaling, config.format, (image) => {
             save(image, config.format, config.save, config.clipboard, config.dialog)
             selection = null
           })
@@ -72,9 +72,9 @@ var capture = (force) => {
         message: 'capture', format: config.format, quality: config.quality
       }, (res) => {
         overlay(false)
-        if (devicePixelRatio !== 1 && !config.dpr) {
+        if (devicePixelRatio !== 1 && !config.scaling) {
           var area = {x: 0, y: 0, w: innerWidth, h: innerHeight}
-          crop(res.image, area, devicePixelRatio, config.dpr, config.format, (image) => {
+          crop(res.image, area, devicePixelRatio, config.scaling, config.format, (image) => {
             save(image, config.format, config.save, config.clipboard, config.dialog)
           })
         }
@@ -125,7 +125,7 @@ var capture = (force) => {
         })(() => {
           overlay(false)
           var area = {x: 0, y: 0, w: innerWidth, h: images.reduce((all, {height}) => all += height, 0)}
-          crop(images, area, devicePixelRatio, config.dpr, config.format, (image) => {
+          crop(images, area, devicePixelRatio, config.scaling, config.format, (image) => {
             document.querySelector('html').style.overflow = ''
             document.querySelector('body').style.overflow = ''
             save(image, config.format, config.save, config.clipboard, config.dialog)

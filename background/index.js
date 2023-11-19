@@ -5,7 +5,7 @@ var defaults = {
   method: 'crop',
   format: 'png',
   quality: 100,
-  dpr: true,
+  scaling: true,
   save: ['file'],
   clipboard: 'url',
   dialog: true,
@@ -19,6 +19,10 @@ chrome.storage.sync.get((store) => {
   if (typeof config.save === 'string') {
     config.clipboard = /url|binary/.test(config.save) ? config.save : 'url'
     config.save = /url|binary/.test(config.save) ? ['clipboard'] : ['file']
+  }
+  if (config.dpr !== undefined) {
+    config.scaling = config.dpr
+    delete config.dpr
   }
   if (typeof config.icon === 'boolean') {
     config.icon = config.icon === false ? 'default' : 'light'

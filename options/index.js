@@ -19,9 +19,9 @@ var state = {
     {id: 'url', title: 'Data URL String'},
     {id: 'binary', title: 'Binary Image'}
   ],
-  dpr: [
-    {id: true, title: 'Preserve original DPI size'},
-    {id: false, title: 'Adjust to actual size'}
+  scaling: [
+    {id: true, title: 'Preserve scaling'},
+    {id: false, title: 'Downscale to actual size'}
   ],
   icon: [
     {id: 'default', title: 'Default Icon'},
@@ -38,7 +38,7 @@ chrome.storage.sync.get((config) => {
   state.format.forEach((item) => item.checked = item.id === config.format)
   state.save.forEach((item) => item.checked = config.save.includes(item.id))
   state.clipboard.forEach((item) => item.checked = item.id === config.clipboard)
-  state.dpr.forEach((item) => item.checked = item.id === config.dpr)
+  state.scaling.forEach((item) => item.checked = item.id === config.scaling)
   state.icon.forEach((item) => item.checked = item.id === config.icon)
   state.delay = config.delay
   state.quality = config.quality
@@ -213,15 +213,15 @@ m.mount(document.querySelector('main'), {
 
         m('h3', 'Screenshot Scaling'),
         m('.bs-callout.s-last',
-          state.dpr.map((item) =>
+          state.scaling.map((item) =>
             m('.row',
               m('.col-sm-12',
                 m('label.s-label', {onupdate: onupdate(item)},
                   m('.mdc-radio',
                     m('input.mdc-radio__native-control', {
-                      type: 'radio', name: 'dpr',
+                      type: 'radio', name: 'scaling',
                       checked: item.checked && 'checked',
-                      onchange: events.option('dpr', item)
+                      onchange: events.option('scaling', item)
                     }),
                     m('.mdc-radio__background',
                       m('.mdc-radio__outer-circle'),

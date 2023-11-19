@@ -62,9 +62,9 @@
 
 # Screenshot Scaling
 
-- **`Preserve original DPI size`** - the screenshot will be saved with the page scaling that you are seeing on the screen
+- **`Preserve scaling`** - the screenshot will be saved with the page scaling that you are seeing on the screen
 
-- **`Adjust to actual size`** - on HDPI displays like Retina or zoomed pages the screenshot will be downscaled to the original page size
+- **`Downscale to actual size`** - on HDPI displays like Retina or zoomed pages the screenshot will be downscaled to the original page size
 
 # Save Format
 
