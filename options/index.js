@@ -5,7 +5,7 @@ var state = {
     {id: 'crop', icon: '◩', title: 'Crop and Save'},
     {id: 'wait', icon: '◪', title: 'Crop and Wait'},
     {id: 'view', icon: '⬒', title: 'Capture Viewport'},
-    {id: 'page', icon: '◼', title: 'Capture Document'},
+    // {id: 'page', icon: '◼', title: 'Capture Document'},
   ],
   format: [
     {id: 'png', title: 'PNG'},
@@ -157,9 +157,9 @@ m.mount(document.querySelector('main'), {
           m('.row',
             m('.col-sm-12',
               state.shortcut &&
-              m('span.s-text', 'Current keyboard shortcut ', m('code', state.shortcut)),
+              m('span.s-text', 'Press ', m('code', state.shortcut)),
               !state.shortcut &&
-              m('span.s-text', 'No keyboard shortcut set'),
+              m('span.s-text', 'Not set'),
               m('button.mdc-button mdc-button--raised s-button', {
                 oncreate: oncreate.ripple,
                 onclick: events.button('shortcut')
