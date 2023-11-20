@@ -1,9 +1,17 @@
 
 # Change Log
 
+## v3.1 - 2023-11-20
+- add option to save to both file and the clipboard at the same time
+- add option to disable confirmation dialog on save to clipboard
+- add option to specify jpg quality
+- new default icon with an overlay
+- improved options page
+
 ## v3.0 - 2022-12-01
 - migrate to manifest v3
 - add light icon option for dark browser theme
+- initial Edge release
 
 ## v2.0 - 2020-12-30
 - add copy file to clipboard as binary image
