@@ -10,8 +10,7 @@
 - Crop and Save (automatic save)
 - Crop and Wait (manual save)
 - Configurable Keyboard Shortcut
-- Save screenshot as PNG or JPG file format
-- Save screenshot as file
+- Save screenshot as PNG or JPG image file
 - Copy screenshot to clipboard as Data URL String or Binary Image
 - Preserve or downscale screenshot size on HDPI displays like Retina
 - Unique screenshot date/time file name
@@ -88,7 +87,7 @@
 
 # Caveats
 
-The extension won't work on certain origins:
+The extension won't work on the following origins:
 
 - chrome and extension settings pages - `chrome://` and `chrome-extension://`
 - the official chrome web store - `https://chromewebstore.google.com/`
@@ -102,9 +101,9 @@ To enable the extension on local `file:///` URLs:
 
 Copy to clipboard:
 
-- it won't work on insecure pages served on `http://`
+- it won't work on domains served on insecure `http://` protocol, but it will work on `http://localhost`
 - when using `Capture Viewport` you will be asked by the browser to grant read access to the clipboard
-- `Capture Viewport` won't work on PDF documents. As an alternative use `Crop and Save` and select the entire screen area
+- `Capture Viewport` won't work on PDF documents, use `Crop and Save` instead and select the entire screen area
 
 # Manual Install
 
